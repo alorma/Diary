@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alorma.diary.data.PreferenceWrapper;
+import com.alorma.diary.data.SettingsManager;
 import com.alorma.diary.di.component.ActivityComponent;
 import com.alorma.diary.di.qualifiers.AppInfo;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
@@ -16,6 +18,9 @@ public class MainActivity extends BaseActivity {
   @Inject
   @AppInfo
   String appPackage;
+
+  @Inject SettingsManager settingsManager;
+  @Inject PreferenceWrapper preferenceWrapper;
 
   @Inject
   @ComputationScheduler Scheduler scheduler;
@@ -30,7 +35,9 @@ public class MainActivity extends BaseActivity {
 
     getActivityComponent().inject(this);
 
-    textView.setText("Net: " + scheduler);
+    textView.setText("Net: " + scheduler
+        + "\n\n" + "Settings: " + settingsManager
+        + "\n\n" + "Preference: " + preferenceWrapper);
   }
 
   @Override

@@ -1,5 +1,11 @@
 package com.alorma.diary.di.module;
 
+import android.content.Context;
+import com.alorma.diary.data.AndroidPreferenceWrapper;
+import com.alorma.diary.data.AndroidSettingsManager;
+import com.alorma.diary.data.PreferenceWrapper;
+import com.alorma.diary.data.SettingsManager;
+import com.alorma.diary.di.qualifiers.ApplicationContext;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
 import com.alorma.diary.di.qualifiers.MainScheduler;
 import com.alorma.diary.di.qualifiers.NetScheduler;
@@ -28,5 +34,15 @@ public class DataModule {
   @MainScheduler
   public Scheduler provideMainScheduler() {
     return AndroidSchedulers.mainThread();
+  }
+
+  @Provides
+  PreferenceWrapper providePreferenceWrapper(@ApplicationContext Context context) {
+    return new AndroidPreferenceWrapper(context);
+  }
+
+  @Provides
+  public SettingsManager getSettingsManager(PreferenceWrapper preferenceWrapper) {
+    return new AndroidSettingsManager(preferenceWrapper);
   }
 }

@@ -1,6 +1,9 @@
 package com.alorma.diary.di.component;
 
+import android.content.SharedPreferences;
 import com.alorma.diary.MainActivity;
+import com.alorma.diary.data.PreferenceWrapper;
+import com.alorma.diary.data.SettingsManager;
 import com.alorma.diary.di.module.ApplicationModule;
 import com.alorma.diary.di.module.DataModule;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
@@ -22,4 +25,8 @@ public interface DataComponent {
 
   @ComputationScheduler
   Scheduler provideComputationScheduler();
+
+  SettingsManager provideSettingsManager();
+
+  PreferenceWrapper providePreferenceWrapper();
 }
