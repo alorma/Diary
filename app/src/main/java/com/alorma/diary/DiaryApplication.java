@@ -4,11 +4,15 @@ import android.app.Application;
 import android.content.Context;
 import com.alorma.diary.di.component.ApplicationComponent;
 import com.alorma.diary.di.component.DaggerApplicationComponent;
+import com.alorma.diary.di.component.DaggerDataComponent;
+import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.module.ApplicationModule;
+import com.alorma.diary.di.module.DataModule;
 
 public class DiaryApplication extends Application {
 
   protected ApplicationComponent applicationComponent;
+  private DataComponent dataComponent;
 
   public static DiaryApplication get(Context context) {
     return (DiaryApplication) context.getApplicationContext();
@@ -17,14 +21,27 @@ public class DiaryApplication extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
+    ApplicationModule applicationModule = new ApplicationModule(this);
+
     applicationComponent = DaggerApplicationComponent
         .builder()
-        .applicationModule(new ApplicationModule(this))
+        .applicationModule(applicationModule)
         .build();
+
+    dataComponent = DaggerDataComponent
+        .builder()
+        .applicationModule(applicationModule)
+        .dataModule(new DataModule())
+        .build();
+
     applicationComponent.inject(this);
   }
 
   public ApplicationComponent getComponent() {
     return applicationComponent;
+  }
+
+  public DataComponent getDataComponent() {
+    return dataComponent;
   }
 }

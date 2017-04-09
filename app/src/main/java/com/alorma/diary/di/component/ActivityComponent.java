@@ -6,7 +6,7 @@ import com.alorma.diary.di.qualifiers.PerActivity;
 import dagger.Component;
 
 @PerActivity
-@Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
+@Component(dependencies = {ApplicationComponent.class, DataComponent.class}, modules = ActivityModule.class)
 public interface ActivityComponent {
   void inject(MainActivity mainActivity);
 }

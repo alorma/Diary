@@ -27,6 +27,7 @@ public class BaseActivity extends AppCompatActivity {
     if (activityComponent == null) {
       activityComponent = DaggerActivityComponent.builder()
           .activityModule(new ActivityModule(this))
+          .dataComponent(DiaryApplication.get(this).getDataComponent())
           .applicationComponent(DiaryApplication.get(this).getComponent())
           .build();
     }
