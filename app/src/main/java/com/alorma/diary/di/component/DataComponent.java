@@ -1,18 +1,20 @@
 package com.alorma.diary.di.component;
 
-import android.content.SharedPreferences;
-import com.alorma.diary.MainActivity;
 import com.alorma.diary.data.PreferenceWrapper;
 import com.alorma.diary.data.SettingsManager;
+import com.alorma.diary.data.diary.ds.DiaryListDataSource;
 import com.alorma.diary.di.module.ApplicationModule;
 import com.alorma.diary.di.module.DataModule;
+import com.alorma.diary.di.qualifiers.Cache;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
 import com.alorma.diary.di.qualifiers.MainScheduler;
 import com.alorma.diary.di.qualifiers.NetScheduler;
+import com.alorma.diary.ui.activity.MainActivity;
+import com.alorma.diary.ui.presenter.DiaryListPresenter;
 import dagger.Component;
 import io.reactivex.Scheduler;
 
-@Component(modules = {ApplicationModule.class, DataModule.class})
+@Component(modules = { ApplicationModule.class, DataModule.class })
 public interface DataComponent {
 
   void inject(MainActivity mainActivity);
@@ -29,4 +31,7 @@ public interface DataComponent {
   SettingsManager provideSettingsManager();
 
   PreferenceWrapper providePreferenceWrapper();
+
+  @Cache
+  DiaryListDataSource provideDataSource();
 }

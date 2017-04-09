@@ -5,7 +5,10 @@ import com.alorma.diary.data.AndroidPreferenceWrapper;
 import com.alorma.diary.data.AndroidSettingsManager;
 import com.alorma.diary.data.PreferenceWrapper;
 import com.alorma.diary.data.SettingsManager;
+import com.alorma.diary.data.diary.ds.DiaryListDataSource;
+import com.alorma.diary.data.diary.ds.MemoryDiaryListDataSource;
 import com.alorma.diary.di.qualifiers.ApplicationContext;
+import com.alorma.diary.di.qualifiers.Cache;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
 import com.alorma.diary.di.qualifiers.MainScheduler;
 import com.alorma.diary.di.qualifiers.NetScheduler;
@@ -44,5 +47,10 @@ public class DataModule {
   @Provides
   public SettingsManager getSettingsManager(PreferenceWrapper preferenceWrapper) {
     return new AndroidSettingsManager(preferenceWrapper);
+  }
+
+  @Provides
+  @Cache DiaryListDataSource provideCacheDiaryList() {
+    return new MemoryDiaryListDataSource();
   }
 }

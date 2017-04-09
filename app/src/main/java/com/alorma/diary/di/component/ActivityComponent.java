@@ -1,6 +1,6 @@
 package com.alorma.diary.di.component;
 
-import com.alorma.diary.MainActivity;
+import com.alorma.diary.ui.activity.MainActivity;
 import com.alorma.diary.di.module.ActivityModule;
 import com.alorma.diary.di.qualifiers.PerActivity;
 import dagger.Component;

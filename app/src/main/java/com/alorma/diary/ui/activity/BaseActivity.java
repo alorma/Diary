@@ -1,5 +1,6 @@
 package com.alorma.diary.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,7 @@ import com.alorma.diary.di.component.ActivityComponent;
 import com.alorma.diary.di.component.DaggerActivityComponent;
 import com.alorma.diary.di.module.ActivityModule;
 
-public class BaseActivity extends AppCompatActivity {
+@SuppressLint("Registered") public class BaseActivity extends AppCompatActivity {
 
   private ActivityComponent activityComponent;
 
