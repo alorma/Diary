@@ -3,6 +3,7 @@ package com.alorma.diary.di.component;
 import com.alorma.diary.MainActivity;
 import com.alorma.diary.di.module.ApplicationModule;
 import com.alorma.diary.di.module.DataModule;
+import com.alorma.diary.di.qualifiers.ComputationScheduler;
 import com.alorma.diary.di.qualifiers.MainScheduler;
 import com.alorma.diary.di.qualifiers.NetScheduler;
 import dagger.Component;
@@ -18,4 +19,7 @@ public interface DataComponent {
 
   @NetScheduler
   Scheduler provideNetScheduler();
+
+  @ComputationScheduler
+  Scheduler provideComputationScheduler();
 }

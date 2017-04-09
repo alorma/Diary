@@ -2,13 +2,11 @@ package com.alorma.diary;
 
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.di.component.ActivityComponent;
-import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.qualifiers.AppInfo;
-import com.alorma.diary.di.qualifiers.NetScheduler;
+import com.alorma.diary.di.qualifiers.ComputationScheduler;
 import com.alorma.diary.ui.activity.BaseActivity;
 import io.reactivex.Scheduler;
 import javax.inject.Inject;
@@ -20,7 +18,7 @@ public class MainActivity extends BaseActivity {
   String appPackage;
 
   @Inject
-  @NetScheduler Scheduler netScheduler;
+  @ComputationScheduler Scheduler scheduler;
 
   @BindView(R.id.text) TextView textView;
 
@@ -32,7 +30,7 @@ public class MainActivity extends BaseActivity {
 
     getActivityComponent().inject(this);
 
-    textView.setText("Net: " + netScheduler);
+    textView.setText("Net: " + scheduler);
   }
 
   @Override
