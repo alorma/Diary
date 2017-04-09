@@ -3,6 +3,7 @@ package com.alorma.diary.di.component;
 import android.app.Application;
 import android.content.Context;
 import com.alorma.diary.DiaryApplication;
+import com.alorma.diary.data.error.ErrorTracker;
 import com.alorma.diary.di.module.ApplicationModule;
 import com.alorma.diary.di.qualifiers.ApplicationContext;
 import dagger.Component;
@@ -18,4 +19,6 @@ public interface ApplicationComponent {
   Context getContext();
 
   Application getApplication();
+
+  ErrorTracker getErrorTracker();
 }

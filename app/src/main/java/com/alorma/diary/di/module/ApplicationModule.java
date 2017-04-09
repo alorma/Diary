@@ -2,6 +2,7 @@ package com.alorma.diary.di.module;
 
 import android.app.Application;
 import android.content.Context;
+import com.alorma.diary.data.error.ErrorTracker;
 import com.alorma.diary.di.qualifiers.ApplicationContext;
 import dagger.Module;
 import dagger.Provides;
@@ -24,5 +25,10 @@ public class ApplicationModule {
   @Provides
   Application provideApplication() {
     return mApplication;
+  }
+
+  @Provides
+  ErrorTracker provideErrorTracker() {
+    return Throwable::printStackTrace;
   }
 }
