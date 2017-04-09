@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.alorma.diary.R;
+import com.alorma.diary.data.model.DiaryListItem;
 import com.alorma.diary.di.component.ApplicationComponent;
 import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.component.FragmentComponent;
@@ -14,7 +15,7 @@ import com.alorma.diary.ui.presenter.DiaryListPresenter;
 import dagger.Component;
 import javax.inject.Inject;
 
-public class DiaryListFragment extends BaseFragment {
+public class DiaryListFragment extends BaseFragment implements DiaryListPresenter.Screen {
 
   @Inject DiaryListPresenter presenter;
 
@@ -32,6 +33,8 @@ public class DiaryListFragment extends BaseFragment {
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+
+    presenter.load();
   }
 
   @Override
@@ -42,6 +45,38 @@ public class DiaryListFragment extends BaseFragment {
         .dataComponent(dataComponent)
         .build()
         .inject(this);
+  }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    presenter.setScreen(this);
+  }
+
+  @Override
+  public void startRefresh() {
+
+  }
+
+  @Override
+  public void addItemToScreen(DiaryListItem item) {
+
+  }
+
+  @Override
+  public void stopRefresh() {
+
+  }
+
+  @Override
+  public void showError() {
+
+  }
+
+  @Override
+  public void onStop() {
+    presenter.stop();
+    super.onStop();
   }
 
   @PerFragment
