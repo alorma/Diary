@@ -5,6 +5,7 @@ import com.alorma.diary.data.error.ErrorTracker;
 import com.alorma.diary.data.model.DiaryListItemModel;
 import com.alorma.diary.di.qualifiers.MainScheduler;
 import io.reactivex.Scheduler;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import org.reactivestreams.Subscription;
 
@@ -32,7 +33,9 @@ public class DiaryListPresenter {
   }
 
   public void load() {
-    diaryListUseCase.getDiaries().doOnSubscribe(this::onStartLoading).observeOn(mainScheduler)
+    diaryListUseCase.getDiaries().doOnSubscribe(this::onStartLoading)
+        /*.repeatWhen(observable -> observable.delay(2, TimeUnit.SECONDS))*/
+        .observeOn(mainScheduler)
         .subscribe(this::onItemLoaded, this::onErrorLoadingItem, this::onAllItemsLoaded);
   }
 

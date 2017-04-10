@@ -2,15 +2,21 @@ package com.alorma.diary.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.alorma.diary.R;
 import com.alorma.diary.data.model.DiaryListItemModel;
 import com.alorma.diary.di.component.ApplicationComponent;
 import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.component.FragmentComponent;
 import com.alorma.diary.di.qualifiers.PerFragment;
+import com.alorma.diary.ui.adapter.DiaryItemAdapter;
 import com.alorma.diary.ui.presenter.DiaryListPresenter;
 import dagger.Component;
 import javax.inject.Inject;
@@ -18,9 +24,23 @@ import javax.inject.Inject;
 public class DiaryListFragment extends BaseFragment implements DiaryListPresenter.Screen {
 
   @Inject DiaryListPresenter presenter;
+  private DiaryItemAdapter diaryItemAdapter;
+
+  @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
   public static DiaryListFragment newInstance() {
     return new DiaryListFragment();
+  }
+
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    createAdapter();
+  }
+
+  private void createAdapter() {
+    LayoutInflater inflater = LayoutInflater.from(getContext());
+    diaryItemAdapter = new DiaryItemAdapter(inflater);
   }
 
   @Nullable
@@ -33,8 +53,16 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    ButterKnife.bind(this, view);
 
+    attachAdapter(diaryItemAdapter);
     presenter.load();
+  }
+
+  private void attachAdapter(RecyclerView.Adapter<DiaryItemAdapter.Holder> adapter) {
+    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    recyclerView.setItemAnimator(new DefaultItemAnimator());
+    recyclerView.setAdapter(adapter);
   }
 
   @Override
@@ -60,7 +88,7 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
 
   @Override
   public void addItemToScreen(DiaryListItemModel item) {
-
+    diaryItemAdapter.add(item);
   }
 
   @Override
