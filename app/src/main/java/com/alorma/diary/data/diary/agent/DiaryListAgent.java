@@ -1,7 +1,7 @@
 package com.alorma.diary.data.diary.agent;
 
 import com.alorma.diary.data.diary.ds.DiaryListDataSource;
-import com.alorma.diary.data.model.DiaryListItem;
+import com.alorma.diary.data.model.DiaryListItemModel;
 import com.alorma.diary.di.qualifiers.Cache;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
 import io.reactivex.Flowable;
@@ -19,7 +19,7 @@ public class DiaryListAgent {
     this.workScheduler = workScheduler;
   }
 
-  public Flowable<DiaryListItem> getDiaries() {
+  public Flowable<DiaryListItemModel> getDiaries() {
     return dataSource.getDiaries().subscribeOn(workScheduler);
   }
 }

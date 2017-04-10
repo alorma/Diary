@@ -1,7 +1,7 @@
 package com.alorma.diary.data.diary;
 
 import com.alorma.diary.data.diary.agent.DiaryListAgent;
-import com.alorma.diary.data.model.DiaryListItem;
+import com.alorma.diary.data.model.DiaryListItemModel;
 import io.reactivex.Flowable;
 import javax.inject.Inject;
 
@@ -14,7 +14,7 @@ public class DiaryListUseCase {
     this.diaryListAgent = diaryListAgent;
   }
 
-  public Flowable<DiaryListItem> getDiaries() {
+  public Flowable<DiaryListItemModel> getDiaries() {
     return diaryListAgent.getDiaries();
   }
 }

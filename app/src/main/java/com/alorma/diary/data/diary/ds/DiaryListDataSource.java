@@ -1,8 +1,8 @@
 package com.alorma.diary.data.diary.ds;
 
-import com.alorma.diary.data.model.DiaryListItem;
+import com.alorma.diary.data.model.DiaryListItemModel;
 import io.reactivex.Flowable;
 
 public interface DiaryListDataSource {
-  Flowable<DiaryListItem> getDiaries();
+  Flowable<DiaryListItemModel> getDiaries();
 }

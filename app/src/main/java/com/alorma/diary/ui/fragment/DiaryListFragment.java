@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.alorma.diary.R;
-import com.alorma.diary.data.model.DiaryListItem;
+import com.alorma.diary.data.model.DiaryListItemModel;
 import com.alorma.diary.di.component.ApplicationComponent;
 import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.component.FragmentComponent;
@@ -59,7 +59,7 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
   }
 
   @Override
-  public void addItemToScreen(DiaryListItem item) {
+  public void addItemToScreen(DiaryListItemModel item) {
 
   }
 
