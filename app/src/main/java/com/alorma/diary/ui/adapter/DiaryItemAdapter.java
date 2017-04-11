@@ -1,5 +1,6 @@
 package com.alorma.diary.ui.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +9,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.R;
+import com.alorma.diary.data.model.ContactListItemModel;
 import com.alorma.diary.data.model.DiaryListItemModel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import polanski.option.Option;
 
 public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Holder> {
 
@@ -34,7 +37,23 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
   }
 
   private void onBindViewHolder(Holder holder, DiaryListItemModel model) {
-    model.getContact().ifSome(contactListItemModel -> holder.textView.setText(contactListItemModel.getName()));
+    Option<ContactListItemModel> modelContact = model.getContact();
+    modelContact.ifSome(contactListItemModel -> holder.textView.setText(contactListItemModel.getName()));
+    modelContact.flatMap(ContactListItemModel::getComments)
+        .filter(strings -> !strings.isEmpty())
+        .match(strings -> handleComments(holder, strings), () -> handleNoComments(holder));
+  }
+
+  @NonNull
+  private Option<Object> handleNoComments(Holder holder) {
+    holder.textView.setText(holder.textView.getText() + " -> No comments");
+    return Option.none();
+  }
+
+  @NonNull
+  private Option<?> handleComments(Holder holder, List<String> strings) {
+    holder.textView.setText(holder.textView.getText() + " -> " + strings.size() + " comments");
+    return Option.ofObj(strings);
   }
 
   @Override

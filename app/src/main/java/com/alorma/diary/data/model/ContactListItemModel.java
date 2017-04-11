@@ -6,8 +6,8 @@ import polanski.option.Option;
 
 public class ContactListItemModel {
   private String name;
-  private Option<Uri> picture;
-  private Option<String> phone;
+  private Uri picture;
+  private String phone;
   private List<String> comments;
 
   public String getName() {
@@ -19,23 +19,23 @@ public class ContactListItemModel {
   }
 
   public Option<Uri> getPicture() {
-    return picture;
+    return Option.ofObj(picture);
   }
 
-  public void setPicture(String picture) {
-    this.picture = Option.ofObj(picture).map(Uri::parse);
+  public void setPicture(Uri picture) {
+    this.picture = picture;
   }
 
   public Option<String> getPhone() {
-    return phone;
+    return Option.ofObj(phone);
   }
 
   public void setPhone(String phone) {
-    this.phone = Option.ofObj(phone);
+    this.phone = phone;
   }
 
-  public List<String> getComments() {
-    return comments;
+  public Option<List<String>> getComments() {
+    return Option.ofObj(comments);
   }
 
   public void setComments(List<String> comments) {
