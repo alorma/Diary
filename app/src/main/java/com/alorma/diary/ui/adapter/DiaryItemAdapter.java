@@ -34,9 +34,7 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
   }
 
   private void onBindViewHolder(Holder holder, DiaryListItemModel model) {
-    if (model.getContact() != null) {
-      holder.textView.setText(model.getContact().getName());
-    }
+    model.getContact().ifSome(contactListItemModel -> holder.textView.setText(contactListItemModel.getName()));
   }
 
   @Override

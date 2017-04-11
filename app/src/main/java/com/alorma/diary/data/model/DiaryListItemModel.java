@@ -1,13 +1,15 @@
 package com.alorma.diary.data.model;
 
-public class DiaryListItemModel {
-  private ContactListItemModel contact;
+import polanski.option.Option;
 
-  public ContactListItemModel getContact() {
+public class DiaryListItemModel {
+  private Option<ContactListItemModel> contact;
+
+  public Option<ContactListItemModel> getContact() {
     return contact;
   }
 
   public void setContact(ContactListItemModel contact) {
-    this.contact = contact;
+    this.contact = Option.ofObj(contact);
   }
 }
