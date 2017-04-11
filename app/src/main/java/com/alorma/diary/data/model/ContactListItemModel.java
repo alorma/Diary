@@ -2,11 +2,12 @@ package com.alorma.diary.data.model;
 
 import android.net.Uri;
 import java.util.List;
+import polanski.option.Option;
 
 public class ContactListItemModel {
   private String name;
-  private Uri picture;
-  private String phone;
+  private Option<Uri> picture;
+  private Option<String> phone;
   private List<String> comments;
 
   public String getName() {
@@ -17,20 +18,20 @@ public class ContactListItemModel {
     this.name = name;
   }
 
-  public Uri getPicture() {
+  public Option<Uri> getPicture() {
     return picture;
   }
 
-  public void setPicture(Uri picture) {
-    this.picture = picture;
+  public void setPicture(String picture) {
+    this.picture = Option.ofObj(picture).map(Uri::parse);
   }
 
-  public String getPhone() {
+  public Option<String> getPhone() {
     return phone;
   }
 
   public void setPhone(String phone) {
-    this.phone = phone;
+    this.phone = Option.ofObj(phone);
   }
 
   public List<String> getComments() {
