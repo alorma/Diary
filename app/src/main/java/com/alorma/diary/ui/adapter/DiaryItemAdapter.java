@@ -38,10 +38,16 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
 
   private void onBindViewHolder(Holder holder, DiaryListItemModel model) {
     Option<ContactListItemModel> modelContact = model.getContact();
-    modelContact.ifSome(contactListItemModel -> holder.textView.setText(contactListItemModel.getName()));
+
+    modelContact.ifSome(contactListItemModel -> setContactName(holder, contactListItemModel));
+
     modelContact.flatMap(ContactListItemModel::getComments)
         .filter(strings -> !strings.isEmpty())
         .match(strings -> handleComments(holder, strings), () -> handleNoComments(holder));
+  }
+
+  private void setContactName(Holder holder, ContactListItemModel contactListItemModel) {
+    holder.textView.setText(contactListItemModel.getName());
   }
 
   @NonNull
