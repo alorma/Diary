@@ -1,12 +1,13 @@
 package com.alorma.diary.ui.presenter;
 
-import com.alorma.diary.data.Validator;
 import com.alorma.diary.data.diary.AddDiaryUseCase;
 import com.alorma.diary.data.error.ErrorTracker;
+import com.alorma.diary.data.exception.DiaryValidationContactException;
 import com.alorma.diary.data.exception.user.validation.UserValidationNameException;
 import com.alorma.diary.data.model.ContactListItemModel;
 import com.alorma.diary.data.model.DiaryListItemCreator;
 import com.alorma.diary.data.model.DiaryListItemModel;
+import com.alorma.diary.ui.presenter.validator.DiaryTestValidator;
 import com.alorma.diary.ui.presenter.validator.UserTestValidator;
 import io.reactivex.Completable;
 import io.reactivex.Scheduler;
@@ -32,7 +33,9 @@ public class AddDiaryPresenterTest {
   @Mock AddDiaryUseCase useCase;
   @Mock AddDiaryPresenter.Screen screen;
   @Mock ErrorTracker errorTracker;
-  @Mock Validator<ContactListItemModel> userValidator;
+
+  UserTestValidator userValidator;
+  DiaryTestValidator diaryValidator;
 
   private AddDiaryPresenter presenter;
   private Scheduler scheduler = Schedulers.trampoline();
@@ -40,8 +43,9 @@ public class AddDiaryPresenterTest {
   @Before
   public void setUp() throws Exception {
     userValidator = spy(new UserTestValidator());
+    diaryValidator = spy(new DiaryTestValidator());
 
-    presenter = new AddDiaryPresenter(useCase, userValidator, scheduler, errorTracker);
+    presenter = new AddDiaryPresenter(useCase, diaryValidator, userValidator, scheduler, errorTracker);
     presenter.setScreen(screen);
   }
 
@@ -93,6 +97,18 @@ public class AddDiaryPresenterTest {
     given(listItemModel.getContact()).willReturn(contactListItemModel);
 
     presenter.addDiary(listItemModel);
+
+    verify(screen, never()).closeScreen();
+    verify(screen).stopLoading();
+    verify(screen).showInvalidName();
+  }
+
+  @Test
+  public void should_call_screen_show_contact_invalid_error_when_add_item_fail_user_not_set() {
+    given(diaryValidator.validate(any(DiaryListItemCreator.class)))
+        .willReturn(Completable.error(new DiaryValidationContactException()));
+
+    presenter.addDiary(mock(DiaryListItemCreator.class));
 
     verify(screen, never()).closeScreen();
     verify(screen).stopLoading();

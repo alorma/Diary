@@ -5,9 +5,11 @@ import com.alorma.diary.data.AndroidPreferenceWrapper;
 import com.alorma.diary.data.AndroidSettingsManager;
 import com.alorma.diary.data.PreferenceWrapper;
 import com.alorma.diary.data.SettingsManager;
-import com.alorma.diary.data.UserNameMandatoryValidator;
 import com.alorma.diary.data.Validator;
+import com.alorma.diary.data.diary.validator.DiaryNewItemValidator;
 import com.alorma.diary.data.model.ContactListItemModel;
+import com.alorma.diary.data.model.DiaryListItemCreator;
+import com.alorma.diary.data.user.validator.UserNameMandatoryValidator;
 import com.alorma.diary.di.qualifiers.ApplicationContext;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
 import com.alorma.diary.di.qualifiers.MainScheduler;
@@ -54,5 +56,10 @@ public class DataModule {
   @Provides
   Validator<ContactListItemModel> getUserValidator(@ComputationScheduler Scheduler scheduler) {
     return new UserNameMandatoryValidator(scheduler);
+  }
+
+  @Provides
+  Validator<DiaryListItemCreator> getDiaryCreatorValidator(@ComputationScheduler Scheduler scheduler) {
+    return new DiaryNewItemValidator(scheduler);
   }
 }

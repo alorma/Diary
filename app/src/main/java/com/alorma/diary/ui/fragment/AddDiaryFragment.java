@@ -118,6 +118,11 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
     Toast.makeText(getContext(), "Invalid name", Toast.LENGTH_SHORT).show();
   }
 
+  @Override
+  public void showContactInvalid() {
+    Toast.makeText(getContext(), "Invalid contact", Toast.LENGTH_SHORT).show();
+  }
+
   @PerFragment
   @Component(dependencies = { ApplicationComponent.class, DataComponent.class })
   public interface Provide extends FragmentComponent<AddDiaryFragment> {

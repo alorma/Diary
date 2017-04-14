@@ -4,6 +4,7 @@ import com.alorma.diary.data.PreferenceWrapper;
 import com.alorma.diary.data.SettingsManager;
 import com.alorma.diary.data.Validator;
 import com.alorma.diary.data.model.ContactListItemModel;
+import com.alorma.diary.data.model.DiaryListItemCreator;
 import com.alorma.diary.di.module.ApplicationModule;
 import com.alorma.diary.di.module.DataModule;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
@@ -33,5 +34,7 @@ public interface DataComponent {
   PreferenceWrapper providePreferenceWrapper();
 
   @UserValidator
-  Validator<ContactListItemModel> userValidator();
+  Validator<ContactListItemModel> provideUserValidator();
+
+  Validator<DiaryListItemCreator> provideDiaryValidator();
 }

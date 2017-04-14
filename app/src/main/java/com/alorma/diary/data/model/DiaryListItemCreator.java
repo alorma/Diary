@@ -1,7 +1,7 @@
 package com.alorma.diary.data.model;
 
 public class DiaryListItemCreator {
-  private int id;
+  private Integer id;
   private ContactListItemModel contact;
 
   public ContactListItemModel getContact() {
@@ -12,11 +12,11 @@ public class DiaryListItemCreator {
     this.contact = contact;
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

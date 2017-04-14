@@ -1,6 +1,7 @@
-package com.alorma.diary.data;
+package com.alorma.diary.data.user.validator;
 
-import com.alorma.diary.data.exception.ValidationException;
+import com.alorma.diary.data.Validator;
+import com.alorma.diary.data.exception.DiaryValidationContactException;
 import com.alorma.diary.data.exception.user.validation.UserValidationNameException;
 import com.alorma.diary.data.model.ContactListItemModel;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
@@ -19,8 +20,9 @@ public class UserNameMandatoryValidator implements Validator<ContactListItemMode
   public Completable validate(ContactListItemModel model) {
     return Completable.defer(() -> {
       if (model == null) {
-        return Completable.error(new ValidationException());
-      } else if (model.getName() == null) {
+        return Completable.error(new DiaryValidationContactException());
+      }
+      if (model.getName() == null) {
         return Completable.error(new UserValidationNameException());
       }
       return Completable.complete();

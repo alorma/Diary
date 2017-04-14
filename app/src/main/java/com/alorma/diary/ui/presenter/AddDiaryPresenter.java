@@ -3,6 +3,7 @@ package com.alorma.diary.ui.presenter;
 import com.alorma.diary.data.Validator;
 import com.alorma.diary.data.diary.AddDiaryUseCase;
 import com.alorma.diary.data.error.ErrorTracker;
+import com.alorma.diary.data.exception.DiaryValidationContactException;
 import com.alorma.diary.data.exception.ValidationException;
 import com.alorma.diary.data.exception.user.validation.UserValidationNameException;
 import com.alorma.diary.data.model.ContactListItemModel;
@@ -10,6 +11,7 @@ import com.alorma.diary.data.model.DiaryListItemCreator;
 import com.alorma.diary.data.model.DiaryListItemModel;
 import com.alorma.diary.di.qualifiers.MainScheduler;
 import com.alorma.diary.di.qualifiers.user.UserValidator;
+import io.reactivex.Completable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
@@ -18,6 +20,7 @@ import javax.inject.Inject;
 public class AddDiaryPresenter {
 
   private AddDiaryUseCase addDiaryUseCase;
+  private Validator<DiaryListItemCreator> diaryCreatorValidator;
   private Validator<ContactListItemModel> userValidator;
   private final Scheduler mainScheduler;
   private final ErrorTracker errorTracker;
@@ -25,10 +28,12 @@ public class AddDiaryPresenter {
 
   @Inject
   public AddDiaryPresenter(AddDiaryUseCase addDiaryUseCase,
+      Validator<DiaryListItemCreator> diaryCreatorValidator,
       @UserValidator Validator<ContactListItemModel> userValidator,
       @MainScheduler Scheduler mainScheduler,
       ErrorTracker errorTracker) {
     this.addDiaryUseCase = addDiaryUseCase;
+    this.diaryCreatorValidator = diaryCreatorValidator;
     this.userValidator = userValidator;
 
     this.mainScheduler = mainScheduler;
@@ -44,7 +49,7 @@ public class AddDiaryPresenter {
   }
 
   public void addDiary(DiaryListItemCreator itemModel) {
-    userValidator.validate(itemModel.getContact())
+    validate(itemModel)
         .toSingleDefault(itemModel)
         .flatMap(aBoolean -> map(itemModel))
         .flatMapCompletable(item -> addDiaryUseCase.addDiary(item))
@@ -52,6 +57,12 @@ public class AddDiaryPresenter {
         .doOnTerminate(this::onAddItemTerminate)
         .observeOn(mainScheduler)
         .subscribe(this::onAddItemComplete, this::onAddItemFail);
+  }
+
+  private Completable validate(DiaryListItemCreator itemModel) {
+    Completable diary = diaryCreatorValidator.validate(itemModel);
+    Completable user = userValidator.validate(itemModel.getContact());
+    return Completable.mergeArray(diary, user);
   }
 
   private Single<DiaryListItemModel> map(DiaryListItemCreator itemModel) {
@@ -83,6 +94,8 @@ public class AddDiaryPresenter {
     if (throwable instanceof ValidationException) {
       if (throwable instanceof UserValidationNameException) {
         getScreen().showInvalidName();
+      } else if (throwable instanceof DiaryValidationContactException) {
+        getScreen().showContactInvalid();
       } else {
         getScreen().showError();
       }
@@ -102,6 +115,8 @@ public class AddDiaryPresenter {
     void showError();
 
     void showInvalidName();
+
+    void showContactInvalid();
 
     class Null implements Screen {
 
@@ -127,6 +142,11 @@ public class AddDiaryPresenter {
 
       @Override
       public void showInvalidName() {
+
+      }
+
+      @Override
+      public void showContactInvalid() {
 
       }
     }
