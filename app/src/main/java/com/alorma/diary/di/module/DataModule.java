@@ -48,9 +48,4 @@ public class DataModule {
   public SettingsManager getSettingsManager(PreferenceWrapper preferenceWrapper) {
     return new AndroidSettingsManager(preferenceWrapper);
   }
-
-  @Provides
-  @Cache DiaryListDataSource provideCacheDiaryList() {
-    return new MemoryDiaryListDataSource();
-  }
 }
