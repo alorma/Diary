@@ -8,19 +8,22 @@ import com.alorma.diary.data.model.EntryItemModel;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import javax.inject.Inject;
 
 public class MemoryDiaryListDataSource implements DiaryListDataSource {
 
-  private final List<DiaryListItemModel> list;
+  private final Map<Integer, DiaryListItemModel> map;
 
   @Inject
   public MemoryDiaryListDataSource() {
-    list = new ArrayList<>();
+    map = new LinkedHashMap<>();
 
     DiaryListItemModel diaryListItemModel1 = createItem1();
-    list.add(diaryListItemModel1);
+    map.put(diaryListItemModel1.getId(), diaryListItemModel1);
   }
 
   @NonNull
@@ -42,6 +45,7 @@ public class MemoryDiaryListDataSource implements DiaryListDataSource {
     entry.setPostedDate(System.currentTimeMillis());
 
     DiaryListItemModel diaryListItemModel = new DiaryListItemModel();
+    diaryListItemModel.setId(new Random().nextInt());
     diaryListItemModel.setContact(contact);
     diaryListItemModel.setLastEntry(entry);
     return diaryListItemModel;
@@ -49,12 +53,12 @@ public class MemoryDiaryListDataSource implements DiaryListDataSource {
 
   @Override
   public Flowable<DiaryListItemModel> getDiaries() {
-    return Flowable.fromIterable(list);
+    return Flowable.fromIterable(map.values());
   }
 
   @Override
   public Completable addDiary(DiaryListItemModel model) {
-    return Completable.defer(() -> list.add(model)
+    return Completable.defer(() -> map.put(model.getId(), model) == null
         ? Completable.complete()
         : Completable.error(new DiaryNotAddedException()));
   }

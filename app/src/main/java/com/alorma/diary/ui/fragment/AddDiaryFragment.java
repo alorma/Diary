@@ -61,7 +61,7 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
     }
 
     ContactListItemModel contact = new ContactListItemModel();
-    contact.setName(UUID.randomUUID().toString());
+    contact.setName(UUID.randomUUID().toString().split("-")[0]);
 
     contact.setComments(comments);
 
@@ -73,6 +73,7 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
     DiaryListItemModel diaryListItemModel = new DiaryListItemModel();
     diaryListItemModel.setContact(contact);
     diaryListItemModel.setLastEntry(entry);
+    diaryListItemModel.setId(random.nextInt());
     return diaryListItemModel;
   }
 
