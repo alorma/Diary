@@ -62,6 +62,12 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
     notifyItemRemoved(position);
   }
 
+  public void clear() {
+    int size = items.size();
+    items.clear();
+    notifyItemRangeRemoved(0, size);
+  }
+
   public class Holder extends RecyclerView.ViewHolder {
     @BindView(R.id.text) TextView contactName;
     @BindView(R.id.entryTitle) TextView entryTitle;

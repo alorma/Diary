@@ -10,6 +10,7 @@
       android:layout_height="wrap_content"
       android:text="Add item"
       android:layout_gravity="center"
+      android:id="@+id/addItem"
       />
 
 </FrameLayout>

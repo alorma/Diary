@@ -41,6 +41,7 @@ public class DiaryListPresenter {
 
   private void onStartLoading(Subscription subscription) {
     getScreen().startRefresh();
+    getScreen().clearItems();
   }
 
   private void onItemLoaded(DiaryListItemModel diaryListItemModel) {
@@ -67,6 +68,8 @@ public class DiaryListPresenter {
   public interface Screen {
     void startRefresh();
 
+    void clearItems();
+
     void addItemToScreen(DiaryListItemModel item);
 
     void stopRefresh();
@@ -78,6 +81,11 @@ public class DiaryListPresenter {
     class Null implements Screen {
       @Override
       public void startRefresh() {
+
+      }
+
+      @Override
+      public void clearItems() {
 
       }
 

@@ -45,6 +45,15 @@ public class DiaryListPresenterTest {
   }
 
   @Test
+  public void should_call_screen_clear_items_when_load() {
+    given(useCase.getDiaries()).willReturn(Flowable.empty());
+
+    presenter.load();
+
+    verify(screen).clearItems();
+  }
+
+  @Test
   public void should_call_screen_addItemToScreen_refresh_when_load() {
     given(useCase.getDiaries()).willReturn(Flowable.just(new DiaryListItemModel()));
 

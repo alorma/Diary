@@ -60,7 +60,6 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
     ButterKnife.bind(this, view);
 
     attachAdapter(diaryItemAdapter);
-    presenter.load();
 
     fabAddItems.setOnClickListener(v -> presenter.addNewItem());
   }
@@ -85,11 +84,17 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
   public void onStart() {
     super.onStart();
     presenter.setScreen(this);
+    presenter.load();
   }
 
   @Override
   public void startRefresh() {
 
+  }
+
+  @Override
+  public void clearItems() {
+    diaryItemAdapter.clear();
   }
 
   @Override
