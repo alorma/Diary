@@ -9,8 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.R;
 import com.alorma.diary.data.model.ContactListItemModel;
-import com.alorma.diary.data.model.DiaryListItemModel;
-import com.alorma.diary.data.model.EntryItemModel;
+import com.alorma.diary.data.model.DiaryListItemCreator;
 import com.alorma.diary.di.component.ApplicationComponent;
 import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.component.FragmentComponent;
@@ -52,7 +51,7 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
     presenter.addDiary(dummyItem());
   }
 
-  private DiaryListItemModel dummyItem() {
+  private DiaryListItemCreator dummyItem() {
     Random random = new Random();
     List<String> comments = new ArrayList<>();
     int commentsNum = random.nextInt(10);
@@ -65,16 +64,10 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
 
     contact.setComments(comments);
 
-    EntryItemModel entry = new EntryItemModel();
-    entry.setSubject(UUID.randomUUID().toString());
-    entry.setContent("Lorem ipsum dolor est");
-    entry.setPostedDate(System.currentTimeMillis());
-
-    DiaryListItemModel diaryListItemModel = new DiaryListItemModel();
-    diaryListItemModel.setContact(contact);
-    diaryListItemModel.setLastEntry(entry);
-    diaryListItemModel.setId(random.nextInt());
-    return diaryListItemModel;
+    DiaryListItemCreator itemCreator = new DiaryListItemCreator();
+    itemCreator.setContact(contact);
+    itemCreator.setId(random.nextInt());
+    return itemCreator;
   }
 
   @Override
@@ -116,6 +109,11 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
   @Override
   public void showError() {
 
+  }
+
+  @Override
+  public void showInvalidName() {
+    // TODO
   }
 
   @PerFragment

@@ -1,4 +1,4 @@
-package com.alorma.diary.di.qualifiers;
+package com.alorma.diary.di.qualifiers.user;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -7,6 +7,6 @@ import javax.inject.Qualifier;
 
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
-@Named("Api")
-public @interface Api {
+@Named("UserValidator")
+public @interface UserValidator {
 }
