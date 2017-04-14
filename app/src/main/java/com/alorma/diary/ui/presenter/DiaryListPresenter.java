@@ -60,6 +60,10 @@ public class DiaryListPresenter {
     this.screen = new Screen.Null();
   }
 
+  public void addNewItem() {
+    getScreen().openNewAddScreen();
+  }
+
   public interface Screen {
     void startRefresh();
 
@@ -68,6 +72,8 @@ public class DiaryListPresenter {
     void stopRefresh();
 
     void showError();
+
+    void openNewAddScreen();
 
     class Null implements Screen {
       @Override
@@ -87,6 +93,11 @@ public class DiaryListPresenter {
 
       @Override
       public void showError() {
+
+      }
+
+      @Override
+      public void openNewAddScreen() {
 
       }
     }

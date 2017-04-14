@@ -88,4 +88,11 @@ public class DiaryListPresenterTest {
 
     verify(errorTracker).trackError(any(Exception.class));
   }
+
+  @Test
+  public void should_call_screen_openNewItemScreen_when_addNewItem() {
+    presenter.addNewItem();
+
+    verify(screen).openNewAddScreen();
+  }
 }

@@ -2,6 +2,7 @@ package com.alorma.diary.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +28,7 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
   private DiaryItemAdapter diaryItemAdapter;
 
   @BindView(R.id.recyclerView) RecyclerView recyclerView;
+  @BindView(R.id.fabAddItems) FloatingActionButton fabAddItems;
 
   public static DiaryListFragment newInstance() {
     return new DiaryListFragment();
@@ -57,6 +59,8 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
 
     attachAdapter(diaryItemAdapter);
     presenter.load();
+
+    fabAddItems.setOnClickListener(v -> presenter.addNewItem());
   }
 
   private void attachAdapter(RecyclerView.Adapter<DiaryItemAdapter.Holder> adapter) {
@@ -98,6 +102,11 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
 
   @Override
   public void showError() {
+
+  }
+
+  @Override
+  public void openNewAddScreen() {
 
   }
 
