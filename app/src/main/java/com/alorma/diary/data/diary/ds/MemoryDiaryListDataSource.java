@@ -1,9 +1,11 @@
 package com.alorma.diary.data.diary.ds;
 
 import android.support.annotation.NonNull;
+import com.alorma.diary.data.exception.DiaryNotAddedException;
 import com.alorma.diary.data.model.ContactListItemModel;
 import com.alorma.diary.data.model.DiaryListItemModel;
 import com.alorma.diary.data.model.EntryItemModel;
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,5 +50,12 @@ public class MemoryDiaryListDataSource implements DiaryListDataSource {
   @Override
   public Flowable<DiaryListItemModel> getDiaries() {
     return Flowable.fromIterable(list);
+  }
+
+  @Override
+  public Completable addDiary(DiaryListItemModel model) {
+    return Completable.defer(() -> list.add(model)
+        ? Completable.complete()
+        : Completable.error(new DiaryNotAddedException()));
   }
 }

@@ -2,19 +2,19 @@ package com.alorma.diary.data.diary;
 
 import com.alorma.diary.data.diary.agent.DiariesAgent;
 import com.alorma.diary.data.model.DiaryListItemModel;
-import io.reactivex.Flowable;
+import io.reactivex.Completable;
 import javax.inject.Inject;
 
-public class DiaryListUseCase {
+public class AddDiaryUseCase {
 
   private DiariesAgent diariesAgent;
 
   @Inject
-  public DiaryListUseCase(DiariesAgent diariesAgent) {
+  public AddDiaryUseCase(DiariesAgent diariesAgent) {
     this.diariesAgent = diariesAgent;
   }
 
-  public Flowable<DiaryListItemModel> getDiaries() {
-    return diariesAgent.getDiaries();
+  public Completable addDiary(DiaryListItemModel model) {
+    return diariesAgent.addDiary(model);
   }
 }
