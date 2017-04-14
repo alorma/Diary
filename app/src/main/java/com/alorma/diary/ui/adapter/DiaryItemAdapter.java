@@ -74,7 +74,7 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
 
     public void bind(DiaryListItemModel model) {
       model.getContact().ifSome(this::handleContact);
-      model.getLastEntry().ifSome(this::handleEntry);
+      model.getLastEntry().match(this::handleEntry, this::handleNoEntries);
     }
 
     // region Contact
@@ -104,9 +104,15 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
     //endregion
 
     //region Entry
-    private void handleEntry(EntryItemModel entryModel) {
+    private Option<EntryItemModel> handleEntry(EntryItemModel entryModel) {
       entryModel.getSubject().ifSome(title -> entryTitle.setText(title));
       entryContent.setText(entryModel.getContent());
+      return Option.ofObj(entryModel);
+    }
+
+    private Option<Object> handleNoEntries() {
+      entryContent.setText("No entries");
+      return Option.none();
     }
     //endregion
   }
