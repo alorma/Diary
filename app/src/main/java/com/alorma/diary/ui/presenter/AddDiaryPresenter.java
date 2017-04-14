@@ -39,6 +39,10 @@ public class AddDiaryPresenter {
         .subscribe(this::onAddItemComplete, this::onAddItemFail);
   }
 
+  public void stop() {
+    this.screen = new Screen.Null();
+  }
+
   private void onAddItemStart(Disposable disposable) {
     getScreen().startLoading();
   }

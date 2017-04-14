@@ -15,7 +15,7 @@ import com.alorma.diary.ui.presenter.AddDiaryPresenter;
 import dagger.Component;
 import javax.inject.Inject;
 
-public class AddDiaryFragment extends BaseFragment {
+public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.Screen {
 
   @Inject AddDiaryPresenter presenter;
 
@@ -44,6 +44,38 @@ public class AddDiaryFragment extends BaseFragment {
         .dataComponent(dataComponent)
         .build()
         .inject(this);
+  }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    presenter.setScreen(this);
+  }
+
+  @Override
+  public void onStop() {
+    super.onStop();
+
+  }
+
+  @Override
+  public void startLoading() {
+
+  }
+
+  @Override
+  public void stopLoading() {
+
+  }
+
+  @Override
+  public void closeScreen() {
+
+  }
+
+  @Override
+  public void showError() {
+
   }
 
   @PerFragment
