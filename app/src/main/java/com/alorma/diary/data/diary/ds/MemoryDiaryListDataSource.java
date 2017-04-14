@@ -18,10 +18,7 @@ public class MemoryDiaryListDataSource implements DiaryListDataSource {
     list = new ArrayList<>();
 
     DiaryListItemModel diaryListItemModel1 = createItem1();
-    DiaryListItemModel diaryListItemModel2 = createItem2();
-
     list.add(diaryListItemModel1);
-    list.add(diaryListItemModel2);
   }
 
   @NonNull
@@ -45,16 +42,6 @@ public class MemoryDiaryListDataSource implements DiaryListDataSource {
     DiaryListItemModel diaryListItemModel = new DiaryListItemModel();
     diaryListItemModel.setContact(contact);
     diaryListItemModel.setLastEntry(entry);
-    return diaryListItemModel;
-  }
-
-  @NonNull
-  private DiaryListItemModel createItem2() {
-    ContactListItemModel contact = new ContactListItemModel();
-    contact.setName("Marc");
-
-    DiaryListItemModel diaryListItemModel = new DiaryListItemModel();
-    diaryListItemModel.setContact(contact);
     return diaryListItemModel;
   }
 
