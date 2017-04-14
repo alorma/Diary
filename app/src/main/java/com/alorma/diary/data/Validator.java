@@ -1,7 +1,7 @@
 package com.alorma.diary.data;
 
-import com.alorma.diary.data.exception.ValidationException;
+import io.reactivex.Completable;
 
 public interface Validator<T> {
-  boolean validate(T t) throws ValidationException;
+  Completable validate(T t);
 }

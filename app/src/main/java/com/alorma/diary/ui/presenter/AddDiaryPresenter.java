@@ -44,18 +44,14 @@ public class AddDiaryPresenter {
   }
 
   public void addDiary(DiaryListItemCreator itemModel) {
-    Single.fromCallable(() -> validate(itemModel))
+    userValidator.validate(itemModel.getContact())
+        .toSingleDefault(itemModel)
         .flatMap(aBoolean -> map(itemModel))
         .flatMapCompletable(item -> addDiaryUseCase.addDiary(item))
         .doOnSubscribe(this::onAddItemStart)
         .doOnTerminate(this::onAddItemTerminate)
         .observeOn(mainScheduler)
         .subscribe(this::onAddItemComplete, this::onAddItemFail);
-  }
-
-  private boolean validate(DiaryListItemCreator itemModel)
-      throws com.alorma.diary.data.exception.ValidationException {
-    return userValidator.validate(itemModel.getContact());
   }
 
   private Single<DiaryListItemModel> map(DiaryListItemCreator itemModel) {
@@ -87,6 +83,8 @@ public class AddDiaryPresenter {
     if (throwable instanceof ValidationException) {
       if (throwable instanceof UserValidationNameException) {
         getScreen().showInvalidName();
+      } else {
+        getScreen().showError();
       }
     } else {
       getScreen().showError();

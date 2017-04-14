@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.R;
@@ -88,6 +89,7 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
 
   @Override
   public void onStop() {
+    presenter.stop();
     super.onStop();
   }
 
@@ -113,7 +115,7 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
 
   @Override
   public void showInvalidName() {
-    // TODO
+    Toast.makeText(getContext(), "Invalid name", Toast.LENGTH_SHORT).show();
   }
 
   @PerFragment

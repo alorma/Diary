@@ -5,6 +5,7 @@ import com.alorma.diary.data.AndroidPreferenceWrapper;
 import com.alorma.diary.data.AndroidSettingsManager;
 import com.alorma.diary.data.PreferenceWrapper;
 import com.alorma.diary.data.SettingsManager;
+import com.alorma.diary.data.UserNameMandatoryValidator;
 import com.alorma.diary.data.Validator;
 import com.alorma.diary.data.model.ContactListItemModel;
 import com.alorma.diary.di.qualifiers.ApplicationContext;
@@ -14,7 +15,6 @@ import com.alorma.diary.di.qualifiers.NetScheduler;
 import com.alorma.diary.di.qualifiers.user.UserValidator;
 import dagger.Module;
 import dagger.Provides;
-import io.reactivex.Completable;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -52,7 +52,7 @@ public class DataModule {
 
   @UserValidator
   @Provides
-  Validator<ContactListItemModel> getUserValidator() {
-    return contactListItemModel -> true;
+  Validator<ContactListItemModel> getUserValidator(@ComputationScheduler Scheduler scheduler) {
+    return new UserNameMandatoryValidator(scheduler);
   }
 }
