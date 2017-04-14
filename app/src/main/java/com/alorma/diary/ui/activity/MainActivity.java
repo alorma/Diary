@@ -14,8 +14,6 @@ public class MainActivity extends BaseActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
-    getActivityComponent().inject(this);
-
     DiaryListFragment fragment = DiaryListFragment.newInstance();
     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
   }

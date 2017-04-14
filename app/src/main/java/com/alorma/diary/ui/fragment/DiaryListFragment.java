@@ -1,5 +1,6 @@
 package com.alorma.diary.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import com.alorma.diary.di.component.ApplicationComponent;
 import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.component.FragmentComponent;
 import com.alorma.diary.di.qualifiers.PerFragment;
+import com.alorma.diary.ui.activity.AddDiaryActivity;
 import com.alorma.diary.ui.adapter.DiaryItemAdapter;
 import com.alorma.diary.ui.presenter.DiaryListPresenter;
 import dagger.Component;
@@ -107,7 +109,8 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
 
   @Override
   public void openNewAddScreen() {
-
+    Intent intent = AddDiaryActivity.createIntent(getContext());
+    startActivity(intent);
   }
 
   @Override

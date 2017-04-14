@@ -24,7 +24,7 @@ import com.alorma.diary.di.module.ActivityModule;
 
   }
 
-  protected ActivityComponent getActivityComponent() {
+  private ActivityComponent getActivityComponent() {
     if (activityComponent == null) {
       activityComponent = DaggerActivityComponent.builder()
           .activityModule(new ActivityModule(this))
