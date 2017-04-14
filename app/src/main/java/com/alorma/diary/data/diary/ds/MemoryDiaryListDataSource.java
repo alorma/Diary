@@ -3,6 +3,7 @@ package com.alorma.diary.data.diary.ds;
 import android.support.annotation.NonNull;
 import com.alorma.diary.data.model.ContactListItemModel;
 import com.alorma.diary.data.model.DiaryListItemModel;
+import com.alorma.diary.data.model.EntryItemModel;
 import io.reactivex.Flowable;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +37,14 @@ public class MemoryDiaryListDataSource implements DiaryListDataSource {
 
     contact.setComments(comments);
 
+    EntryItemModel entry = new EntryItemModel();
+    entry.setSubject("Title of entry");
+    entry.setContent("Lorem ipsum dolor est");
+    entry.setPostedDate(System.currentTimeMillis());
+
     DiaryListItemModel diaryListItemModel = new DiaryListItemModel();
     diaryListItemModel.setContact(contact);
+    diaryListItemModel.setLastEntry(entry);
     return diaryListItemModel;
   }
 
