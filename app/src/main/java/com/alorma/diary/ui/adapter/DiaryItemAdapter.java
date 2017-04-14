@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import com.alorma.diary.R;
 import com.alorma.diary.data.model.ContactListItemModel;
 import com.alorma.diary.data.model.DiaryListItemModel;
+import com.alorma.diary.data.model.EntryItemModel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -37,29 +38,7 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
   }
 
   private void onBindViewHolder(Holder holder, DiaryListItemModel model) {
-    Option<ContactListItemModel> modelContact = model.getContact();
-
-    modelContact.ifSome(contactListItemModel -> setContactName(holder, contactListItemModel));
-
-    modelContact.flatMap(ContactListItemModel::getComments)
-        .filter(strings -> !strings.isEmpty())
-        .match(strings -> handleComments(holder, strings), () -> handleNoComments(holder));
-  }
-
-  private void setContactName(Holder holder, ContactListItemModel contactListItemModel) {
-    holder.textView.setText(contactListItemModel.getName());
-  }
-
-  @NonNull
-  private Option<Object> handleNoComments(Holder holder) {
-    holder.textView.setText(holder.textView.getText() + " -> No comments");
-    return Option.none();
-  }
-
-  @NonNull
-  private Option<?> handleComments(Holder holder, List<String> strings) {
-    holder.textView.setText(holder.textView.getText() + " -> " + strings.size() + " comments");
-    return Option.ofObj(strings);
+    holder.bind(model);
   }
 
   @Override
@@ -84,11 +63,51 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
   }
 
   public class Holder extends RecyclerView.ViewHolder {
-    @BindView(R.id.text) TextView textView;
+    @BindView(R.id.text) TextView contactName;
+    @BindView(R.id.entryTitle) TextView entryTitle;
+    @BindView(R.id.entryContent) TextView entryContent;
 
     public Holder(View itemView) {
       super(itemView);
       ButterKnife.bind(this, itemView);
     }
+
+    public void bind(DiaryListItemModel model) {
+      model.getContact().ifSome(this::handleContact);
+      model.getLastEntry().ifSome(this::handleEntry);
+    }
+
+    // region Contact
+    private void handleContact(ContactListItemModel contactListItemModel) {
+      setContactName(contactListItemModel);
+
+      contactListItemModel.getComments()
+          .filter(strings -> !strings.isEmpty())
+          .match(this::handleComments, this::handleNoComments);
+    }
+
+    private void setContactName(ContactListItemModel contactListItemModel) {
+      contactName.setText(contactListItemModel.getName());
+    }
+
+    @NonNull
+    private Option<List<String>> handleComments(List<String> strings) {
+      contactName.setText(contactName.getText() + " -> " + strings.size() + " comments");
+      return Option.ofObj(strings);
+    }
+
+    @NonNull
+    private Option<Object> handleNoComments() {
+      contactName.setText(contactName.getText() + " -> No comments");
+      return Option.none();
+    }
+    //endregion
+
+    //region Entry
+    private void handleEntry(EntryItemModel entryModel) {
+      entryModel.getSubject().ifSome(title -> entryTitle.setText(title));
+      entryContent.setText(entryModel.getContent());
+    }
+    //endregion
   }
 }
