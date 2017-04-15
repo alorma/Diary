@@ -12,7 +12,6 @@ public class DiaryNewItemValidator implements Validator<DiaryListItemCreator> {
   private Scheduler scheduler;
 
   public DiaryNewItemValidator(Scheduler scheduler) {
-
     this.scheduler = scheduler;
   }
 

@@ -7,9 +7,12 @@ import com.alorma.diary.data.PreferenceWrapper;
 import com.alorma.diary.data.SettingsManager;
 import com.alorma.diary.data.Validator;
 import com.alorma.diary.data.diary.agent.DiaryMapper;
+import com.alorma.diary.data.diary.agent.EntryMapper;
 import com.alorma.diary.data.diary.validator.DiaryNewItemValidator;
+import com.alorma.diary.data.diary.validator.EntryItemValidator;
 import com.alorma.diary.data.model.ContactItemModel;
 import com.alorma.diary.data.model.DiaryListItemCreator;
+import com.alorma.diary.data.model.EntryItemModel;
 import com.alorma.diary.data.user.validator.UserNameMandatoryValidator;
 import com.alorma.diary.di.qualifiers.ApplicationContext;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
@@ -65,7 +68,17 @@ public class DataModule {
   }
 
   @Provides
+  Validator<EntryItemModel> getEntryValidator(@ComputationScheduler Scheduler scheduler) {
+    return new EntryItemValidator(scheduler);
+  }
+
+  @Provides
   DiaryMapper getDiaryMapper() {
     return new DiaryMapper();
+  }
+
+  @Provides
+  EntryMapper getEntryMapper() {
+    return new EntryMapper();
   }
 }

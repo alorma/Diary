@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -11,13 +12,16 @@ import com.alorma.diary.R;
 import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.data.model.EntryItemModel;
 import com.alorma.diary.di.component.ActivityComponent;
-import com.alorma.diary.ui.presenter.GetDiaryPresenter;
+import com.alorma.diary.ui.presenter.DiaryDetailPresenter;
+import java.util.Random;
+import java.util.UUID;
 import javax.inject.Inject;
 
-public class DiaryDetailActivity extends BaseActivity implements GetDiaryPresenter.Screen {
+public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPresenter.Screen {
 
-  @Inject GetDiaryPresenter getDiaryPresenter;
+  @Inject DiaryDetailPresenter diaryDetailPresenter;
   @BindView(R.id.text) TextView textView;
+  @BindView(R.id.fabAddEntries) FloatingActionButton fab;
 
   public static Intent createIntent(Context context, DiaryItemModel itemModel) {
     Intent intent = new Intent(context, DiaryDetailActivity.class);
@@ -34,19 +38,39 @@ public class DiaryDetailActivity extends BaseActivity implements GetDiaryPresent
     if (getIntent() == null || getIntent().getExtras() == null) {
       throw new RuntimeException("Should never happen: " + DiaryDetailActivity.class.getCanonicalName());
     }
+
+    fab.setOnClickListener(v -> onAddEntryClick());
+  }
+
+  private void onAddEntryClick() {
+    EntryItemModel entry = getEntry();
+    diaryDetailPresenter.addEntry(entry);
+  }
+
+  private EntryItemModel getEntry() {
+    Random random = new Random();
+    EntryItemModel model = new EntryItemModel();
+    model.setSubject("Random entry: " + random.nextGaussian());
+    model.setContent("Lorem ipsum generated: " + UUID.randomUUID());
+    model.setPostedDate(System.currentTimeMillis());
+    return model;
   }
 
   @Override
   protected void onStart() {
     super.onStart();
-    getDiaryPresenter.setScreen(this);
+    diaryDetailPresenter.setScreen(this);
+    loadData();
+  }
+
+  private void loadData() {
     int diaryId = getIntent().getExtras().getInt(Extras.DIARY_ID);
-    getDiaryPresenter.load(diaryId);
+    diaryDetailPresenter.load(diaryId);
   }
 
   @Override
   protected void onStop() {
-    getDiaryPresenter.stop();
+    diaryDetailPresenter.stop();
     super.onStop();
   }
 
@@ -66,6 +90,11 @@ public class DiaryDetailActivity extends BaseActivity implements GetDiaryPresent
     textView.append("Diary ::" + itemModel.getId());
     showContact(itemModel);
     showEntries(itemModel);
+  }
+
+  @Override
+  public void showEntryAdded() {
+    loadData();
   }
 
   private void showContact(DiaryItemModel itemModel) {
@@ -121,6 +150,11 @@ public class DiaryDetailActivity extends BaseActivity implements GetDiaryPresent
 
   @Override
   public void showError() {
+
+  }
+
+  @Override
+  public void showErrorAddEntry() {
 
   }
 

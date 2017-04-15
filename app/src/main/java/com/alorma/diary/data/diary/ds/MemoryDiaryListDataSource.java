@@ -2,6 +2,7 @@ package com.alorma.diary.data.diary.ds;
 
 import android.support.annotation.NonNull;
 import com.alorma.diary.data.exception.DiaryNotAddedException;
+import com.alorma.diary.data.exception.DiaryNotFoundException;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -72,5 +74,22 @@ public class MemoryDiaryListDataSource implements DiaryListDataSource {
   @Override
   public Single<Diary> getDiary(int id) {
     return Single.fromCallable(() -> map.get(id));
+  }
+
+  @Override
+  public Completable addEntry(int diaryId, Entry entry) {
+    return Completable.defer(() -> {
+      if (!map.containsKey(diaryId)) {
+        return Completable.error(new DiaryNotFoundException());
+      }
+      Diary diary = map.get(diaryId);
+      List<Entry> entries = diary.getEntries();
+      if (entries == null) {
+        entries = new LinkedList<>();
+      }
+      entries.add(entry);
+      diary.setEntries(entries);
+      return Completable.complete();
+    });
   }
 }
