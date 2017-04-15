@@ -70,6 +70,7 @@ public class AddDiaryPresenter {
       ContactListItemModel contact = itemModel.getContact();
       DiaryListItemModel diaryListItemModel = new DiaryListItemModel();
       diaryListItemModel.setContact(contact);
+      diaryListItemModel.setId(itemModel.getId());
       return diaryListItemModel;
     });
   }
