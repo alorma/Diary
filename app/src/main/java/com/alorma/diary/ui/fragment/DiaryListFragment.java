@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.R;
@@ -24,7 +25,7 @@ import com.alorma.diary.ui.presenter.DiaryListPresenter;
 import dagger.Component;
 import javax.inject.Inject;
 
-public class DiaryListFragment extends BaseFragment implements DiaryListPresenter.Screen {
+public class DiaryListFragment extends BaseFragment implements DiaryListPresenter.Screen, DiaryItemAdapter.Callback {
 
   @Inject DiaryListPresenter presenter;
   private DiaryItemAdapter diaryItemAdapter;
@@ -83,6 +84,7 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
   @Override
   public void onStart() {
     super.onStart();
+    diaryItemAdapter.setCallback(this);
     presenter.setScreen(this);
     presenter.load();
   }
@@ -121,7 +123,13 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
   @Override
   public void onStop() {
     presenter.stop();
+    diaryItemAdapter.setCallback(null);
     super.onStop();
+  }
+
+  @Override
+  public void onDiaryItemCLick(DiaryListItemModel itemModel) {
+    Toast.makeText(getContext(), "Item: " + itemModel.getId(), Toast.LENGTH_SHORT).show();
   }
 
   @PerFragment

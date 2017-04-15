@@ -21,6 +21,7 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
 
   private final List<DiaryListItemModel> items;
   private LayoutInflater inflater;
+  private Callback callback;
 
   public DiaryItemAdapter(LayoutInflater inflater) {
     this.inflater = inflater;
@@ -68,6 +69,14 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
     notifyItemRangeRemoved(0, size);
   }
 
+  public Option<Callback> getCallback() {
+    return Option.ofObj(callback);
+  }
+
+  public void setCallback(Callback callback) {
+    this.callback = callback;
+  }
+
   public class Holder extends RecyclerView.ViewHolder {
     @BindView(R.id.text) TextView contactName;
     @BindView(R.id.entryTitle) TextView entryTitle;
@@ -76,6 +85,12 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
     public Holder(View itemView) {
       super(itemView);
       ButterKnife.bind(this, itemView);
+
+      itemView.setOnClickListener(v -> onDiaryClick(items.get(getAdapterPosition())));
+    }
+
+    private void onDiaryClick(DiaryListItemModel itemModel) {
+      getCallback().ifSome(callback -> callback.onDiaryItemCLick(itemModel));
     }
 
     public void bind(DiaryListItemModel model) {
@@ -121,5 +136,9 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
       return Option.none();
     }
     //endregion
+  }
+
+  public interface Callback {
+    void onDiaryItemCLick(DiaryListItemModel itemModel);
   }
 }
