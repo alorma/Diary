@@ -7,7 +7,6 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -52,10 +51,14 @@ public class MemoryDiaryListDataSource implements DiaryListDataSource {
     entry2.setContent("Lorem ipsum dolor est 2");
     entry2.setDate(new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(2)));
 
+    List<Entry> entries = new ArrayList<>();
+    entries.add(entry1);
+    entries.add(entry2);
+
     Diary diary = new Diary();
     diary.setId(new Random().nextInt());
     diary.setContact(contact);
-    diary.setEntries(Arrays.asList(entry1, entry2));
+    diary.setEntries(entries);
     return diary;
   }
 

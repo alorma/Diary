@@ -21,6 +21,7 @@
     </activity>
     <activity android:name=".ui.activity.AddDiaryActivity"/>
     <activity android:name=".ui.activity.DiaryDetailActivity"/>
+    <activity android:name=".ui.activity.AddDiaryEntryActivity"/>
   </application>
 
 </manifest>

@@ -13,8 +13,6 @@ import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.data.model.EntryItemModel;
 import com.alorma.diary.di.component.ActivityComponent;
 import com.alorma.diary.ui.presenter.DiaryDetailPresenter;
-import java.util.Random;
-import java.util.UUID;
 import javax.inject.Inject;
 
 public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPresenter.Screen {
@@ -43,17 +41,13 @@ public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPres
   }
 
   private void onAddEntryClick() {
-    EntryItemModel entry = getEntry();
-    diaryDetailPresenter.addEntry(entry);
+    diaryDetailPresenter.requestNewEntry();
   }
 
-  private EntryItemModel getEntry() {
-    Random random = new Random();
-    EntryItemModel model = new EntryItemModel();
-    model.setSubject("Random entry: " + random.nextGaussian());
-    model.setContent("Lorem ipsum generated: " + UUID.randomUUID());
-    model.setPostedDate(System.currentTimeMillis());
-    return model;
+  @Override
+  public void openNewEntry(int id) {
+    Intent intent = AddDiaryEntryActivity.createIntent(this, id);
+    startActivity(intent);
   }
 
   @Override
