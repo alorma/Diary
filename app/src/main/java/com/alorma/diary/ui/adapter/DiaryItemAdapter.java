@@ -95,7 +95,7 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
 
     public void bind(DiaryItemModel model) {
       model.getContact().ifSome(this::handleContact);
-      model.getLastEntry().match(this::handleEntry, this::handleNoEntries);
+      model.getLastEntry().ifSome(this::handleEntry).ifNone(this::handleNoEntries);
     }
 
     // region Contact
@@ -104,7 +104,7 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
 
       contactItemModel.getComments()
           .filter(strings -> !strings.isEmpty())
-          .match(this::handleComments, this::handleNoComments);
+          .ifSome(this::handleComments).ifNone(this::handleNoComments);
     }
 
     private void setContactName(ContactItemModel contactItemModel) {
@@ -112,28 +112,24 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
     }
 
     @NonNull
-    private Option<List<String>> handleComments(List<String> strings) {
+    private void handleComments(List<String> strings) {
       contactName.setText(contactName.getText() + " -> " + strings.size() + " comments");
-      return Option.ofObj(strings);
     }
 
     @NonNull
-    private Option<Object> handleNoComments() {
+    private void handleNoComments() {
       contactName.setText(contactName.getText() + " -> No comments");
-      return Option.none();
     }
     //endregion
 
     //region Entry
-    private Option<EntryItemModel> handleEntry(EntryItemModel entryModel) {
+    private void handleEntry(EntryItemModel entryModel) {
       entryModel.getSubject().ifSome(title -> entryTitle.setText(title));
       entryContent.setText(entryModel.getContent());
-      return Option.ofObj(entryModel);
     }
 
-    private Option<Object> handleNoEntries() {
+    private void handleNoEntries() {
       entryContent.setText("No entries");
-      return Option.none();
     }
     //endregion
   }

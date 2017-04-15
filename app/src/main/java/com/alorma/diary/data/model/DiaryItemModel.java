@@ -1,11 +1,13 @@
 package com.alorma.diary.data.model;
 
+import java.util.List;
 import polanski.option.Option;
 
 public class DiaryItemModel {
   private int id;
   private ContactItemModel contact;
   private EntryItemModel lastEntry;
+  private List<EntryItemModel> entries;
 
   public Option<ContactItemModel> getContact() {
     return Option.ofObj(contact);
@@ -37,5 +39,13 @@ public class DiaryItemModel {
       return id == ((DiaryItemModel) obj).getId();
     }
     return false;
+  }
+
+  public void setEntries(List<EntryItemModel> entries) {
+    this.entries = entries;
+  }
+
+  public Option<List<EntryItemModel>> getEntries() {
+    return Option.ofObj(entries);
   }
 }

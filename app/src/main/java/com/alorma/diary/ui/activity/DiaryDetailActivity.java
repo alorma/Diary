@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.R;
 import com.alorma.diary.data.model.DiaryItemModel;
+import com.alorma.diary.data.model.EntryItemModel;
 import com.alorma.diary.di.component.ActivityComponent;
 import com.alorma.diary.ui.presenter.GetDiaryPresenter;
 import javax.inject.Inject;
@@ -62,6 +63,24 @@ public class DiaryDetailActivity extends BaseActivity implements GetDiaryPresent
   @Override
   public void showDiary(DiaryItemModel itemModel) {
     textView.setText("Diary ::" + itemModel.getId());
+    itemModel.getEntries().ifSome(entryItemModels -> {
+      textView.append("\n");
+      textView.append("Entries:");
+      textView.append("\n");
+      for (EntryItemModel entry : entryItemModels) {
+        entry.getSubject().ifSome(s -> {
+          textView.append("\n");
+          textView.append(s);
+        });
+        textView.append("\n");
+        textView.append(entry.getContent());
+        textView.append("\n");
+        textView.append("\n");
+      }
+    }).ifNone(() -> {
+      textView.append("\n");
+      textView.append("No entries");
+    });
   }
 
   @Override

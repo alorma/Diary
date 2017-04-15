@@ -5,14 +5,15 @@ import com.alorma.diary.data.diary.ds.Contact;
 import com.alorma.diary.data.diary.ds.Diary;
 import com.alorma.diary.data.diary.ds.Entry;
 import com.alorma.diary.data.model.ContactItemModel;
-import com.alorma.diary.data.model.DiaryListItemCreator;
 import com.alorma.diary.data.model.DiaryItemModel;
+import com.alorma.diary.data.model.DiaryListItemCreator;
 import com.alorma.diary.data.model.EntryItemModel;
 import io.reactivex.functions.Function;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class DiaryMapper {
@@ -56,6 +57,12 @@ public class DiaryMapper {
         List<Entry> list = new ArrayList<>(entries);
         Collections.sort(list, SORT_DATE);
         model.setLastEntry(mapEntry(list.get(0)));
+
+        List<EntryItemModel> entryItemModels = new LinkedList<>();
+        for (Entry entry : list) {
+          entryItemModels.add(mapEntry(entry));
+        }
+        model.setEntries(entryItemModels);
       }
     }
 
