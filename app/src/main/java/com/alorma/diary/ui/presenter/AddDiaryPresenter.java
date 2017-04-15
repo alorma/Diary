@@ -53,6 +53,7 @@ public class AddDiaryPresenter {
         .doOnSubscribe(this::onAddItemStart)
         .doOnTerminate(this::onAddItemTerminate)
         .observeOn(mainScheduler)
+        .toSingleDefault(itemModel.getId())
         .subscribe(this::onAddItemComplete, this::onAddItemFail);
   }
 
@@ -74,8 +75,8 @@ public class AddDiaryPresenter {
     getScreen().stopLoading();
   }
 
-  private void onAddItemComplete() {
-    getScreen().closeScreen();
+  private void onAddItemComplete(int itemId) {
+    getScreen().openDiaryScreenAndClose(itemId);
   }
 
   private void onAddItemFail(Throwable throwable) {
@@ -98,7 +99,7 @@ public class AddDiaryPresenter {
 
     void stopLoading();
 
-    void closeScreen();
+    void openDiaryScreenAndClose(int id);
 
     void showError();
 
@@ -119,7 +120,7 @@ public class AddDiaryPresenter {
       }
 
       @Override
-      public void closeScreen() {
+      public void openDiaryScreenAndClose(int id) {
 
       }
 

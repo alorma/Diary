@@ -1,5 +1,6 @@
 package com.alorma.diary.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.alorma.diary.di.component.ApplicationComponent;
 import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.component.FragmentComponent;
 import com.alorma.diary.di.qualifiers.PerFragment;
+import com.alorma.diary.ui.activity.DiaryDetailActivity;
 import com.alorma.diary.ui.presenter.AddDiaryPresenter;
 import dagger.Component;
 import java.util.ArrayList;
@@ -104,7 +106,9 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
   }
 
   @Override
-  public void closeScreen() {
+  public void openDiaryScreenAndClose(int itemId) {
+    Intent intent = DiaryDetailActivity.createIntent(getContext(), itemId);
+    startActivity(intent);
     getActivity().finish();
   }
 

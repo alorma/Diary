@@ -9,7 +9,7 @@ import com.alorma.diary.R;
 import com.alorma.diary.di.component.ActivityComponent;
 import com.alorma.diary.ui.fragment.AddDiaryEntryFragment;
 
-public class AddDiaryEntryActivity extends BaseActivity {
+public class AddDiaryEntryActivity extends BaseBackActivity {
 
   public static Intent createIntent(Context context, int id) {
     Intent intent = new Intent(context, AddDiaryEntryActivity.class);

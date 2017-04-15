@@ -27,6 +27,12 @@ public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPres
     return intent;
   }
 
+  public static Intent createIntent(Context context, int diaryId) {
+    Intent intent = new Intent(context, DiaryDetailActivity.class);
+    intent.putExtra(Extras.DIARY_ID, diaryId);
+    return intent;
+  }
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

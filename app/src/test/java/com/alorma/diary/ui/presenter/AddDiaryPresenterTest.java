@@ -19,6 +19,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -72,7 +73,7 @@ public class AddDiaryPresenterTest {
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 
-    verify(screen).closeScreen();
+    verify(screen).openDiaryScreenAndClose(anyInt());
   }
 
   @Test
@@ -97,7 +98,7 @@ public class AddDiaryPresenterTest {
 
     presenter.addDiary(listItemModel);
 
-    verify(screen, never()).closeScreen();
+    verify(screen, never()).openDiaryScreenAndClose(anyInt());
     verify(screen).stopLoading();
     verify(screen).showInvalidName();
   }
@@ -109,7 +110,7 @@ public class AddDiaryPresenterTest {
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 
-    verify(screen, never()).closeScreen();
+    verify(screen, never()).openDiaryScreenAndClose(anyInt());
     verify(screen).stopLoading();
     verify(screen).showInvalidName();
   }
