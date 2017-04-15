@@ -33,7 +33,20 @@ public class GetDiaryPresenter {
   }
 
   public void load(int id) {
+    getDiaryUseCase.getDiary(id)
+        .observeOn(mainScheduler)
+        .doOnSubscribe(disposable -> getScreen().startLoading())
+        .subscribe(this::onDiaryLoaded, this::loadDiaryError);
+  }
 
+  private void onDiaryLoaded(DiaryItemModel diaryItemModel) {
+    getScreen().stopLoading();
+    getScreen().showDiary(diaryItemModel);
+  }
+
+  private void loadDiaryError(Throwable throwable) {
+    getScreen().showError();
+    errorTracker.trackError(throwable);
   }
 
   public void stop() {

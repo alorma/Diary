@@ -14,7 +14,7 @@ public class GetDiaryUseCase {
     this.diariesAgent = diariesAgent;
   }
 
-  public Single<DiaryItemModel> addDiary(int id) {
+  public Single<DiaryItemModel> getDiary(int id) {
     return diariesAgent.getDiary(id);
   }
 }
