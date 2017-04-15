@@ -62,7 +62,38 @@ public class DiaryDetailActivity extends BaseActivity implements GetDiaryPresent
 
   @Override
   public void showDiary(DiaryItemModel itemModel) {
-    textView.setText("Diary ::" + itemModel.getId());
+    textView.setText("");
+    textView.append("Diary ::" + itemModel.getId());
+    showContact(itemModel);
+    showEntries(itemModel);
+  }
+
+  private void showContact(DiaryItemModel itemModel) {
+    itemModel.getContact().ifSome(contact -> {
+      textView.append("\n");
+      textView.append("------");
+      textView.append("\n");
+      textView.append(contact.getName());
+      textView.append("\n");
+      contact.getComments()
+          .filter(strings -> strings != null && !strings.isEmpty())
+          .ifSome(comments -> {
+            for (String comment : comments) {
+              textView.append(comment);
+              textView.append("\n");
+            }
+          }).ifNone(() -> {
+        textView.append("\n");
+        textView.append("No comments");
+        textView.append("\n");
+      });
+      textView.append("\n");
+      textView.append("------");
+      textView.append("\n");
+    });
+  }
+
+  private void showEntries(DiaryItemModel itemModel) {
     itemModel.getEntries().ifSome(entryItemModels -> {
       textView.append("\n");
       textView.append("Entries:");
