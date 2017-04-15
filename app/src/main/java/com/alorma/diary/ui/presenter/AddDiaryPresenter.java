@@ -8,12 +8,10 @@ import com.alorma.diary.data.exception.ValidationException;
 import com.alorma.diary.data.exception.user.validation.UserValidationNameException;
 import com.alorma.diary.data.model.ContactItemModel;
 import com.alorma.diary.data.model.DiaryListItemCreator;
-import com.alorma.diary.data.model.DiaryListItemModel;
 import com.alorma.diary.di.qualifiers.MainScheduler;
 import com.alorma.diary.di.qualifiers.user.UserValidator;
 import io.reactivex.Completable;
 import io.reactivex.Scheduler;
-import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import javax.inject.Inject;
 
@@ -51,7 +49,6 @@ public class AddDiaryPresenter {
   public void addDiary(DiaryListItemCreator itemModel) {
     validate(itemModel)
         .toSingleDefault(itemModel)
-        .flatMap(aBoolean -> map(itemModel))
         .flatMapCompletable(item -> addDiaryUseCase.addDiary(item))
         .doOnSubscribe(this::onAddItemStart)
         .doOnTerminate(this::onAddItemTerminate)
@@ -63,16 +60,6 @@ public class AddDiaryPresenter {
     Completable diary = diaryCreatorValidator.validate(itemModel);
     Completable user = userValidator.validate(itemModel.getContact());
     return Completable.mergeArray(diary, user);
-  }
-
-  private Single<DiaryListItemModel> map(DiaryListItemCreator itemModel) {
-    return Single.fromCallable(() -> {
-      ContactItemModel contact = itemModel.getContact();
-      DiaryListItemModel diaryListItemModel = new DiaryListItemModel();
-      diaryListItemModel.setContact(contact);
-      diaryListItemModel.setId(itemModel.getId());
-      return diaryListItemModel;
-    });
   }
 
   public void stop() {

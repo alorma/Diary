@@ -5,12 +5,13 @@ import com.alorma.diary.data.exception.DiaryNotAddedException;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 public class MemoryDiaryListDataSource implements DiaryListDataSource {
@@ -38,15 +39,20 @@ public class MemoryDiaryListDataSource implements DiaryListDataSource {
 
     contact.setComments(comments);
 
-    Entry entry = new Entry();
-    entry.setSubject("Title of entry");
-    entry.setContent("Lorem ipsum dolor est");
-    entry.setDate(new Date(System.currentTimeMillis()));
+    Entry entry1 = new Entry();
+    entry1.setSubject("Title of entry");
+    entry1.setContent("Lorem ipsum dolor est");
+    entry1.setDate(new Date(System.currentTimeMillis()));
+
+    Entry entry2 = new Entry();
+    entry2.setSubject("Title of entry 2");
+    entry2.setContent("Lorem ipsum dolor est 2");
+    entry2.setDate(new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(2)));
 
     Diary diary = new Diary();
     diary.setId(new Random().nextInt());
     diary.setContact(contact);
-    diary.setEntries(Collections.singletonList(entry));
+    diary.setEntries(Arrays.asList(entry1, entry2));
     return diary;
   }
 

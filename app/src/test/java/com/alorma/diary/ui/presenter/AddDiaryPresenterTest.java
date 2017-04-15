@@ -51,7 +51,7 @@ public class AddDiaryPresenterTest {
 
   @Test
   public void should_call_screen_show_loading_when_add_item_successfully() {
-    given(useCase.addDiary(any(DiaryListItemModel.class))).willReturn(Completable.complete());
+    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Completable.complete());
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 
@@ -60,7 +60,7 @@ public class AddDiaryPresenterTest {
 
   @Test
   public void should_call_screen_stop_loading_when_add_item_successfully() {
-    given(useCase.addDiary(any(DiaryListItemModel.class))).willReturn(Completable.complete());
+    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Completable.complete());
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 
@@ -69,7 +69,7 @@ public class AddDiaryPresenterTest {
 
   @Test
   public void should_call_screen_close_add_screen_when_add_item_successfully() {
-    given(useCase.addDiary(any(DiaryListItemModel.class))).willReturn(Completable.complete());
+    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Completable.complete());
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 
@@ -78,7 +78,7 @@ public class AddDiaryPresenterTest {
 
   @Test
   public void should_call_screen_show_error_when_add_item_fail() {
-    given(useCase.addDiary(any(DiaryListItemModel.class))).willReturn(Completable.error(new Exception()));
+    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Completable.error(new Exception()));
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 
@@ -117,7 +117,7 @@ public class AddDiaryPresenterTest {
 
   @Test
   public void should_call_error_tracker_when_add_item_fail() {
-    given(useCase.addDiary(any(DiaryListItemModel.class))).willReturn(Completable.error(new Exception()));
+    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Completable.error(new Exception()));
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 

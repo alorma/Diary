@@ -1,6 +1,7 @@
 package com.alorma.diary.data.diary.agent;
 
 import com.alorma.diary.data.diary.ds.DiaryListDataSource;
+import com.alorma.diary.data.model.DiaryListItemCreator;
 import com.alorma.diary.data.model.DiaryListItemModel;
 import com.alorma.diary.di.qualifiers.Cache;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
@@ -27,7 +28,7 @@ public class DiariesAgent {
     return dataSource.getDiaries().map(diaryMapper.mapDiary()).subscribeOn(workScheduler);
   }
 
-  public Completable addDiary(DiaryListItemModel model) {
+  public Completable addDiary(DiaryListItemCreator model) {
     return Single.just(model)
         .map(diaryMapper.mapDiaryItemModel())
         .flatMapCompletable(diary -> dataSource.addDiary(diary));

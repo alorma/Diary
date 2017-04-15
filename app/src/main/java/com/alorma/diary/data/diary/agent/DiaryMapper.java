@@ -5,6 +5,7 @@ import com.alorma.diary.data.diary.ds.Contact;
 import com.alorma.diary.data.diary.ds.Diary;
 import com.alorma.diary.data.diary.ds.Entry;
 import com.alorma.diary.data.model.ContactItemModel;
+import com.alorma.diary.data.model.DiaryListItemCreator;
 import com.alorma.diary.data.model.DiaryListItemModel;
 import com.alorma.diary.data.model.EntryItemModel;
 import io.reactivex.functions.Function;
@@ -70,11 +71,25 @@ public class DiaryMapper {
     }
   }
 
-  private class DiaryItemModelMap implements Function<DiaryListItemModel, Diary> {
+  private class DiaryItemModelMap implements Function<DiaryListItemCreator, Diary> {
 
     @Override
-    public Diary apply(DiaryListItemModel itemModel) throws Exception {
-      return new Diary();
+    public Diary apply(DiaryListItemCreator creator) throws Exception {
+      Diary diary = new Diary();
+      diary.setId(creator.getId());
+      mapContact(diary, creator.getContact());
+      return diary;
+    }
+
+    private void mapContact(Diary diary, ContactItemModel contactItemModel) {
+      if (contactItemModel != null) {
+        Contact contact = new Contact();
+        contact.setName(contactItemModel.getName());
+        contactItemModel.getPhone().ifSome(contact::setPhone);
+        contactItemModel.getPicture().map(Uri::toString).ifSome(contact::setPicture);
+        contactItemModel.getComments().ifSome(contact::setComments);
+        diary.setContact(contact);
+      }
     }
   }
 
@@ -82,7 +97,7 @@ public class DiaryMapper {
     return new DiaryMap();
   }
 
-  public Function<DiaryListItemModel, Diary> mapDiaryItemModel() {
+  public Function<DiaryListItemCreator, Diary> mapDiaryItemModel() {
     return new DiaryItemModelMap();
   }
 }
