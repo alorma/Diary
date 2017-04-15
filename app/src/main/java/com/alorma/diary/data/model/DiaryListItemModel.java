@@ -4,14 +4,14 @@ import polanski.option.Option;
 
 public class DiaryListItemModel {
   private int id;
-  private ContactListItemModel contact;
+  private ContactItemModel contact;
   private EntryItemModel lastEntry;
 
-  public Option<ContactListItemModel> getContact() {
+  public Option<ContactItemModel> getContact() {
     return Option.ofObj(contact);
   }
 
-  public void setContact(ContactListItemModel contact) {
+  public void setContact(ContactItemModel contact) {
     this.contact = contact;
   }
 

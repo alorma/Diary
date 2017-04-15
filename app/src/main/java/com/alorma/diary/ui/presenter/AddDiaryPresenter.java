@@ -6,7 +6,7 @@ import com.alorma.diary.data.error.ErrorTracker;
 import com.alorma.diary.data.exception.DiaryValidationContactException;
 import com.alorma.diary.data.exception.ValidationException;
 import com.alorma.diary.data.exception.user.validation.UserValidationNameException;
-import com.alorma.diary.data.model.ContactListItemModel;
+import com.alorma.diary.data.model.ContactItemModel;
 import com.alorma.diary.data.model.DiaryListItemCreator;
 import com.alorma.diary.data.model.DiaryListItemModel;
 import com.alorma.diary.di.qualifiers.MainScheduler;
@@ -21,7 +21,7 @@ public class AddDiaryPresenter {
 
   private AddDiaryUseCase addDiaryUseCase;
   private Validator<DiaryListItemCreator> diaryCreatorValidator;
-  private Validator<ContactListItemModel> userValidator;
+  private Validator<ContactItemModel> userValidator;
   private final Scheduler mainScheduler;
   private final ErrorTracker errorTracker;
   private Screen screen;
@@ -29,7 +29,7 @@ public class AddDiaryPresenter {
   @Inject
   public AddDiaryPresenter(AddDiaryUseCase addDiaryUseCase,
       Validator<DiaryListItemCreator> diaryCreatorValidator,
-      @UserValidator Validator<ContactListItemModel> userValidator,
+      @UserValidator Validator<ContactItemModel> userValidator,
       @MainScheduler Scheduler mainScheduler,
       ErrorTracker errorTracker) {
     this.addDiaryUseCase = addDiaryUseCase;
@@ -67,7 +67,7 @@ public class AddDiaryPresenter {
 
   private Single<DiaryListItemModel> map(DiaryListItemCreator itemModel) {
     return Single.fromCallable(() -> {
-      ContactListItemModel contact = itemModel.getContact();
+      ContactItemModel contact = itemModel.getContact();
       DiaryListItemModel diaryListItemModel = new DiaryListItemModel();
       diaryListItemModel.setContact(contact);
       diaryListItemModel.setId(itemModel.getId());

@@ -4,7 +4,7 @@ import com.alorma.diary.data.diary.AddDiaryUseCase;
 import com.alorma.diary.data.error.ErrorTracker;
 import com.alorma.diary.data.exception.DiaryValidationContactException;
 import com.alorma.diary.data.exception.user.validation.UserValidationNameException;
-import com.alorma.diary.data.model.ContactListItemModel;
+import com.alorma.diary.data.model.ContactItemModel;
 import com.alorma.diary.data.model.DiaryListItemCreator;
 import com.alorma.diary.data.model.DiaryListItemModel;
 import com.alorma.diary.ui.presenter.validator.DiaryTestValidator;
@@ -88,13 +88,13 @@ public class AddDiaryPresenterTest {
 
   @Test
   public void should_call_screen_show_contact_name_error_when_add_item_fail_user_not_validate_name() {
-    given(userValidator.validate(any(ContactListItemModel.class)))
+    given(userValidator.validate(any(ContactItemModel.class)))
         .willReturn(Completable.error(new UserValidationNameException()));
 
-    ContactListItemModel contactListItemModel = mock(ContactListItemModel.class);
-    given(contactListItemModel.getName()).willReturn(null);
+    ContactItemModel contactItemModel = mock(ContactItemModel.class);
+    given(contactItemModel.getName()).willReturn(null);
     DiaryListItemCreator listItemModel = mock(DiaryListItemCreator.class);
-    given(listItemModel.getContact()).willReturn(contactListItemModel);
+    given(listItemModel.getContact()).willReturn(contactItemModel);
 
     presenter.addDiary(listItemModel);
 

@@ -9,7 +9,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.R;
-import com.alorma.diary.data.model.ContactListItemModel;
+import com.alorma.diary.data.model.ContactItemModel;
 import com.alorma.diary.data.model.DiaryListItemCreator;
 import com.alorma.diary.di.component.ApplicationComponent;
 import com.alorma.diary.di.component.DataComponent;
@@ -60,7 +60,7 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
       comments.add("Comment #" + (i + 1));
     }
 
-    ContactListItemModel contact = new ContactListItemModel();
+    ContactItemModel contact = new ContactItemModel();
     contact.setName(UUID.randomUUID().toString().split("-")[0]);
 
     contact.setComments(comments);

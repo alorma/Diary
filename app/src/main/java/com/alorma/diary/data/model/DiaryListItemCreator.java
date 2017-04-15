@@ -2,13 +2,13 @@ package com.alorma.diary.data.model;
 
 public class DiaryListItemCreator {
   private Integer id;
-  private ContactListItemModel contact;
+  private ContactItemModel contact;
 
-  public ContactListItemModel getContact() {
+  public ContactItemModel getContact() {
     return contact;
   }
 
-  public void setContact(ContactListItemModel contact) {
+  public void setContact(ContactItemModel contact) {
     this.contact = contact;
   }
 

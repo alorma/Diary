@@ -4,7 +4,7 @@ import android.net.Uri;
 import java.util.List;
 import polanski.option.Option;
 
-public class ContactListItemModel {
+public class ContactItemModel {
   private String name;
   private Uri picture;
   private String phone;

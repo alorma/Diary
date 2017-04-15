@@ -9,7 +9,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.R;
-import com.alorma.diary.data.model.ContactListItemModel;
+import com.alorma.diary.data.model.ContactItemModel;
 import com.alorma.diary.data.model.DiaryListItemModel;
 import com.alorma.diary.data.model.EntryItemModel;
 import java.util.ArrayList;
@@ -99,16 +99,16 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
     }
 
     // region Contact
-    private void handleContact(ContactListItemModel contactListItemModel) {
-      setContactName(contactListItemModel);
+    private void handleContact(ContactItemModel contactItemModel) {
+      setContactName(contactItemModel);
 
-      contactListItemModel.getComments()
+      contactItemModel.getComments()
           .filter(strings -> !strings.isEmpty())
           .match(this::handleComments, this::handleNoComments);
     }
 
-    private void setContactName(ContactListItemModel contactListItemModel) {
-      contactName.setText(contactListItemModel.getName());
+    private void setContactName(ContactItemModel contactItemModel) {
+      contactName.setText(contactItemModel.getName());
     }
 
     @NonNull
