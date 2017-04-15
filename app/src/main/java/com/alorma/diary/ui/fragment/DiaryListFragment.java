@@ -20,6 +20,7 @@ import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.component.FragmentComponent;
 import com.alorma.diary.di.qualifiers.PerFragment;
 import com.alorma.diary.ui.activity.AddDiaryActivity;
+import com.alorma.diary.ui.activity.DiaryDetailActivity;
 import com.alorma.diary.ui.adapter.DiaryItemAdapter;
 import com.alorma.diary.ui.presenter.DiaryListPresenter;
 import dagger.Component;
@@ -129,7 +130,8 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
 
   @Override
   public void onDiaryItemCLick(DiaryListItemModel itemModel) {
-    Toast.makeText(getContext(), "Item: " + itemModel.getId(), Toast.LENGTH_SHORT).show();
+    Intent intent = DiaryDetailActivity.createIntent(getContext(), itemModel);
+    startActivity(intent);
   }
 
   @PerFragment
