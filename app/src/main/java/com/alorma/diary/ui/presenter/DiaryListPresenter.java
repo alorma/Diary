@@ -2,10 +2,9 @@ package com.alorma.diary.ui.presenter;
 
 import com.alorma.diary.data.diary.DiaryListUseCase;
 import com.alorma.diary.data.error.ErrorTracker;
-import com.alorma.diary.data.model.DiaryListItemModel;
+import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.di.qualifiers.MainScheduler;
 import io.reactivex.Scheduler;
-import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import org.reactivestreams.Subscription;
 
@@ -44,8 +43,8 @@ public class DiaryListPresenter {
     getScreen().clearItems();
   }
 
-  private void onItemLoaded(DiaryListItemModel diaryListItemModel) {
-    getScreen().addItemToScreen(diaryListItemModel);
+  private void onItemLoaded(DiaryItemModel diaryItemModel) {
+    getScreen().addItemToScreen(diaryItemModel);
   }
 
   private void onErrorLoadingItem(Throwable throwable) {
@@ -70,7 +69,7 @@ public class DiaryListPresenter {
 
     void clearItems();
 
-    void addItemToScreen(DiaryListItemModel item);
+    void addItemToScreen(DiaryItemModel item);
 
     void stopRefresh();
 
@@ -90,7 +89,7 @@ public class DiaryListPresenter {
       }
 
       @Override
-      public void addItemToScreen(DiaryListItemModel item) {
+      public void addItemToScreen(DiaryItemModel item) {
 
       }
 

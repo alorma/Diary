@@ -2,7 +2,7 @@ package com.alorma.diary.ui.presenter;
 
 import com.alorma.diary.data.diary.DiaryListUseCase;
 import com.alorma.diary.data.error.ErrorTracker;
-import com.alorma.diary.data.model.DiaryListItemModel;
+import com.alorma.diary.data.model.DiaryItemModel;
 import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
@@ -55,25 +55,25 @@ public class DiaryListPresenterTest {
 
   @Test
   public void should_call_screen_addItemToScreen_refresh_when_load() {
-    given(useCase.getDiaries()).willReturn(Flowable.just(new DiaryListItemModel()));
+    given(useCase.getDiaries()).willReturn(Flowable.just(new DiaryItemModel()));
 
     presenter.load();
 
-    verify(screen).addItemToScreen(any(DiaryListItemModel.class));
+    verify(screen).addItemToScreen(any(DiaryItemModel.class));
   }
 
   @Test
   public void should_call_screen_addItemToScreen_N_times_refresh_when_load() {
-    given(useCase.getDiaries()).willReturn(Flowable.just(new DiaryListItemModel(), new DiaryListItemModel(), new DiaryListItemModel()));
+    given(useCase.getDiaries()).willReturn(Flowable.just(new DiaryItemModel(), new DiaryItemModel(), new DiaryItemModel()));
 
     presenter.load();
 
-    verify(screen, times(3)).addItemToScreen(any(DiaryListItemModel.class));
+    verify(screen, times(3)).addItemToScreen(any(DiaryItemModel.class));
   }
 
   @Test
   public void should_call_screen_stop_refresh_when_finish_load() {
-    given(useCase.getDiaries()).willReturn(Flowable.just(new DiaryListItemModel()));
+    given(useCase.getDiaries()).willReturn(Flowable.just(new DiaryItemModel()));
 
     presenter.load();
 

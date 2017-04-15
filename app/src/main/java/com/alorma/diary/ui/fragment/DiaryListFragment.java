@@ -10,11 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.R;
-import com.alorma.diary.data.model.DiaryListItemModel;
+import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.di.component.ApplicationComponent;
 import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.component.FragmentComponent;
@@ -101,7 +100,7 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
   }
 
   @Override
-  public void addItemToScreen(DiaryListItemModel item) {
+  public void addItemToScreen(DiaryItemModel item) {
     diaryItemAdapter.add(item);
   }
 
@@ -129,7 +128,7 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
   }
 
   @Override
-  public void onDiaryItemCLick(DiaryListItemModel itemModel) {
+  public void onDiaryItemCLick(DiaryItemModel itemModel) {
     Intent intent = DiaryDetailActivity.createIntent(getContext(), itemModel);
     startActivity(intent);
   }

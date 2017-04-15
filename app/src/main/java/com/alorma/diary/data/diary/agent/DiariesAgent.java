@@ -2,7 +2,7 @@ package com.alorma.diary.data.diary.agent;
 
 import com.alorma.diary.data.diary.ds.DiaryListDataSource;
 import com.alorma.diary.data.model.DiaryListItemCreator;
-import com.alorma.diary.data.model.DiaryListItemModel;
+import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.di.qualifiers.Cache;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
 import io.reactivex.Completable;
@@ -24,7 +24,7 @@ public class DiariesAgent {
     this.workScheduler = workScheduler;
   }
 
-  public Flowable<DiaryListItemModel> getDiaries() {
+  public Flowable<DiaryItemModel> getDiaries() {
     return dataSource.getDiaries().map(diaryMapper.mapDiary()).subscribeOn(workScheduler);
   }
 
@@ -32,5 +32,9 @@ public class DiariesAgent {
     return Single.just(model)
         .map(diaryMapper.mapDiaryItemModel())
         .flatMapCompletable(diary -> dataSource.addDiary(diary));
+  }
+
+  public Single<DiaryItemModel> getDiary(int id) {
+    return dataSource.getDiary(id).map(diaryMapper.mapDiary());
   }
 }

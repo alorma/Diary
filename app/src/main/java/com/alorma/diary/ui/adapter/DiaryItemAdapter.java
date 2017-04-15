@@ -10,7 +10,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.R;
 import com.alorma.diary.data.model.ContactItemModel;
-import com.alorma.diary.data.model.DiaryListItemModel;
+import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.data.model.EntryItemModel;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +19,7 @@ import polanski.option.Option;
 
 public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Holder> {
 
-  private final List<DiaryListItemModel> items;
+  private final List<DiaryItemModel> items;
   private LayoutInflater inflater;
   private Callback callback;
 
@@ -38,7 +38,7 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
     onBindViewHolder(holder, items.get(position));
   }
 
-  private void onBindViewHolder(Holder holder, DiaryListItemModel model) {
+  private void onBindViewHolder(Holder holder, DiaryItemModel model) {
     holder.bind(model);
   }
 
@@ -47,12 +47,12 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
     return items.size();
   }
 
-  public void add(DiaryListItemModel item) {
+  public void add(DiaryItemModel item) {
     items.add(item);
     notifyItemInserted(items.size() - 1);
   }
 
-  public void addAll(Collection<? extends DiaryListItemModel> items) {
+  public void addAll(Collection<? extends DiaryItemModel> items) {
     int size = items.size();
     this.items.addAll(items);
     notifyItemRangeInserted(size - 1, this.items.size());
@@ -89,11 +89,11 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
       itemView.setOnClickListener(v -> onDiaryClick(items.get(getAdapterPosition())));
     }
 
-    private void onDiaryClick(DiaryListItemModel itemModel) {
+    private void onDiaryClick(DiaryItemModel itemModel) {
       getCallback().ifSome(callback -> callback.onDiaryItemCLick(itemModel));
     }
 
-    public void bind(DiaryListItemModel model) {
+    public void bind(DiaryItemModel model) {
       model.getContact().ifSome(this::handleContact);
       model.getLastEntry().match(this::handleEntry, this::handleNoEntries);
     }
@@ -139,6 +139,6 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
   }
 
   public interface Callback {
-    void onDiaryItemCLick(DiaryListItemModel itemModel);
+    void onDiaryItemCLick(DiaryItemModel itemModel);
   }
 }

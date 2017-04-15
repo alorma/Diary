@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import com.alorma.diary.data.exception.DiaryNotAddedException;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -66,5 +67,10 @@ public class MemoryDiaryListDataSource implements DiaryListDataSource {
     return Completable.defer(() -> map.put(model.getId(), model) == null
         ? Completable.complete()
         : Completable.error(new DiaryNotAddedException()));
+  }
+
+  @Override
+  public Single<Diary> getDiary(int id) {
+    return Single.fromCallable(() -> map.get(id));
   }
 }

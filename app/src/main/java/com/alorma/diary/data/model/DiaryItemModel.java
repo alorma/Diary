@@ -2,7 +2,7 @@ package com.alorma.diary.data.model;
 
 import polanski.option.Option;
 
-public class DiaryListItemModel {
+public class DiaryItemModel {
   private int id;
   private ContactItemModel contact;
   private EntryItemModel lastEntry;
@@ -33,8 +33,8 @@ public class DiaryListItemModel {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof DiaryListItemModel) {
-      return id == ((DiaryListItemModel) obj).getId();
+    if (obj instanceof DiaryItemModel) {
+      return id == ((DiaryItemModel) obj).getId();
     }
     return false;
   }

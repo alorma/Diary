@@ -8,14 +8,17 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.R;
-import com.alorma.diary.data.model.DiaryListItemModel;
+import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.di.component.ActivityComponent;
+import com.alorma.diary.ui.presenter.GetDiaryPresenter;
+import javax.inject.Inject;
 
-public class DiaryDetailActivity extends BaseActivity {
+public class DiaryDetailActivity extends BaseActivity implements GetDiaryPresenter.Screen {
 
+  @Inject GetDiaryPresenter getDiaryPresenter;
   @BindView(R.id.text) TextView textView;
 
-  public static Intent createIntent(Context context, DiaryListItemModel itemModel) {
+  public static Intent createIntent(Context context, DiaryItemModel itemModel) {
     Intent intent = new Intent(context, DiaryDetailActivity.class);
     intent.putExtra(Extras.DIARY_ID, itemModel.getId());
     return intent;
@@ -30,14 +33,45 @@ public class DiaryDetailActivity extends BaseActivity {
     if (getIntent() == null || getIntent().getExtras() == null) {
       throw new RuntimeException("Should never happen: " + DiaryDetailActivity.class.getCanonicalName());
     }
+  }
 
+  @Override
+  protected void onStart() {
+    super.onStart();
+    getDiaryPresenter.setScreen(this);
     int diaryId = getIntent().getExtras().getInt(Extras.DIARY_ID);
-    textView.setText("Diary ID: " + diaryId);
+    getDiaryPresenter.load(diaryId);
+  }
+
+  @Override
+  protected void onStop() {
+    getDiaryPresenter.stop();
+    super.onStop();
   }
 
   @Override
   protected void injectActivity(ActivityComponent activityComponent) {
     activityComponent.inject(this);
+  }
+
+  @Override
+  public void startLoading() {
+
+  }
+
+  @Override
+  public void showDiary(DiaryItemModel itemModel) {
+    textView.setText("Diary ::" + itemModel.getId());
+  }
+
+  @Override
+  public void stopLoading() {
+
+  }
+
+  @Override
+  public void showError() {
+
   }
 
   private static class Extras {

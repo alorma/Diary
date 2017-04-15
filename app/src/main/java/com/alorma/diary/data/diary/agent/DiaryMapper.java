@@ -6,7 +6,7 @@ import com.alorma.diary.data.diary.ds.Diary;
 import com.alorma.diary.data.diary.ds.Entry;
 import com.alorma.diary.data.model.ContactItemModel;
 import com.alorma.diary.data.model.DiaryListItemCreator;
-import com.alorma.diary.data.model.DiaryListItemModel;
+import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.data.model.EntryItemModel;
 import io.reactivex.functions.Function;
 import java.util.ArrayList;
@@ -25,18 +25,18 @@ public class DiaryMapper {
         return o2.getDate().compareTo(o1.getDate());
       };
 
-  private class DiaryMap implements Function<Diary, DiaryListItemModel> {
+  private class DiaryMap implements Function<Diary, DiaryItemModel> {
 
     @Override
-    public DiaryListItemModel apply(Diary diary) throws Exception {
-      DiaryListItemModel diaryListItemModel = new DiaryListItemModel();
-      diaryListItemModel.setId(diary.getId());
-      mapContact(diaryListItemModel, diary.getContact());
-      mapEntries(diaryListItemModel, diary.getEntries());
-      return diaryListItemModel;
+    public DiaryItemModel apply(Diary diary) throws Exception {
+      DiaryItemModel diaryItemModel = new DiaryItemModel();
+      diaryItemModel.setId(diary.getId());
+      mapContact(diaryItemModel, diary.getContact());
+      mapEntries(diaryItemModel, diary.getEntries());
+      return diaryItemModel;
     }
 
-    private void mapContact(DiaryListItemModel model, Contact contact) {
+    private void mapContact(DiaryItemModel model, Contact contact) {
       if (contact != null) {
         ContactItemModel contactModel = new ContactItemModel();
         contactModel.setName(contact.getName());
@@ -51,7 +51,7 @@ public class DiaryMapper {
       }
     }
 
-    private void mapEntries(DiaryListItemModel model, List<Entry> entries) {
+    private void mapEntries(DiaryItemModel model, List<Entry> entries) {
       if (entries != null && !entries.isEmpty()) {
         List<Entry> list = new ArrayList<>(entries);
         Collections.sort(list, SORT_DATE);
@@ -93,7 +93,7 @@ public class DiaryMapper {
     }
   }
 
-  public Function<Diary, DiaryListItemModel> mapDiary() {
+  public Function<Diary, DiaryItemModel> mapDiary() {
     return new DiaryMap();
   }
 

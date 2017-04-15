@@ -2,7 +2,6 @@ package com.alorma.diary.data.diary;
 
 import com.alorma.diary.data.diary.agent.DiariesAgent;
 import com.alorma.diary.data.model.DiaryListItemCreator;
-import com.alorma.diary.data.model.DiaryListItemModel;
 import io.reactivex.Completable;
 import javax.inject.Inject;
 

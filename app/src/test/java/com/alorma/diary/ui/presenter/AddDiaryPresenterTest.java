@@ -6,7 +6,6 @@ import com.alorma.diary.data.exception.DiaryValidationContactException;
 import com.alorma.diary.data.exception.user.validation.UserValidationNameException;
 import com.alorma.diary.data.model.ContactItemModel;
 import com.alorma.diary.data.model.DiaryListItemCreator;
-import com.alorma.diary.data.model.DiaryListItemModel;
 import com.alorma.diary.ui.presenter.validator.DiaryTestValidator;
 import com.alorma.diary.ui.presenter.validator.UserTestValidator;
 import io.reactivex.Completable;
