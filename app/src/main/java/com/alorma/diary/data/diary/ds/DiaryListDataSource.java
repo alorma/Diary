@@ -1,5 +1,7 @@
 package com.alorma.diary.data.diary.ds;
 
+import com.alorma.diary.data.diary.dbmodel.Diary;
+import com.alorma.diary.data.diary.dbmodel.Entry;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -11,5 +13,5 @@ public interface DiaryListDataSource {
 
   Single<Diary> getDiary(int id);
 
-  Completable addEntry(int diaryId, Entry entry);
+  Completable addEntry(long diaryId, Entry entry);
 }

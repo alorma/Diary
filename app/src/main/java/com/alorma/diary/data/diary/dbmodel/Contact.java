@@ -1,12 +1,35 @@
-package com.alorma.diary.data.diary.ds;
+package com.alorma.diary.data.diary.dbmodel;
 
+import com.afollestad.inquiry.annotations.Column;
+import com.afollestad.inquiry.annotations.Table;
+import io.reactivex.annotations.Nullable;
 import java.util.List;
 
+@Table
 public class Contact {
+
+  @Column(name = "_id", primaryKey = true, notNull = true, autoIncrement = true)
+  private long id;
+
+  @Column
+  private long diaryId;
+
+  //@Column
   private List<String> comments;
+
+  @Column
   private String name;
+
+  @Column
   private String phone;
+
+  @Column
+  @Nullable
   private String picture;
+
+  public Contact() {
+
+  }
 
   public List<String> getComments() {
     return comments;
@@ -38,5 +61,13 @@ public class Contact {
 
   public void setPicture(String picture) {
     this.picture = picture;
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public long getDiaryId() {
+    return diaryId;
   }
 }

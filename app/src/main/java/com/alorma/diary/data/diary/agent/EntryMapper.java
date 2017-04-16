@@ -1,6 +1,6 @@
 package com.alorma.diary.data.diary.agent;
 
-import com.alorma.diary.data.diary.ds.Entry;
+import com.alorma.diary.data.diary.dbmodel.Entry;
 import com.alorma.diary.data.model.EntryItemModel;
 import io.reactivex.functions.Function;
 import java.util.Date;

@@ -49,7 +49,7 @@ public class AddDiaryEntryPresenter {
     resourceLifeCycle.destroy();
   }
 
-  public void addEntry(int diaryId, EntryItemModel entry) {
+  public void addEntry(long diaryId, EntryItemModel entry) {
     validate(entry).toSingleDefault(entry)
         .flatMapCompletable(entryItemModel -> addDiaryEntryUseCase.getDiary(diaryId, entryItemModel))
         .observeOn(mainScheduler)

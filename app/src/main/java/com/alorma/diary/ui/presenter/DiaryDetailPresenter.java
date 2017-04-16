@@ -92,7 +92,7 @@ public class DiaryDetailPresenter {
 
     void showErrorAddEntry();
 
-    void openNewEntry(int id);
+    void openNewEntry(long id);
 
     class Null implements Screen {
 
@@ -127,7 +127,7 @@ public class DiaryDetailPresenter {
       }
 
       @Override
-      public void openNewEntry(int id) {
+      public void openNewEntry(long id) {
 
       }
     }

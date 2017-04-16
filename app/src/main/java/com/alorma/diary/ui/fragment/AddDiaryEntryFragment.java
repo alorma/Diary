@@ -25,12 +25,12 @@ public class AddDiaryEntryFragment extends BaseFragment implements AddDiaryEntry
   @Inject AddDiaryEntryPresenter presenter;
 
   @BindView(R.id.addItem) View addItemView;
-  private int diaryId;
+  private long diaryId;
 
-  public static AddDiaryEntryFragment newInstance(int id) {
+  public static AddDiaryEntryFragment newInstance(long id) {
     AddDiaryEntryFragment fragment = new AddDiaryEntryFragment();
     Bundle bundle = new Bundle();
-    bundle.putInt(Extras.DIARY_ID, id);
+    bundle.putLong(Extras.DIARY_ID, id);
     fragment.setArguments(bundle);
     return fragment;
   }
@@ -52,7 +52,7 @@ public class AddDiaryEntryFragment extends BaseFragment implements AddDiaryEntry
   }
 
   private void readArguments() {
-    diaryId = getArguments().getInt(Extras.DIARY_ID);
+    diaryId = getArguments().getLong(Extras.DIARY_ID);
   }
 
   private void onAddViewClick() {

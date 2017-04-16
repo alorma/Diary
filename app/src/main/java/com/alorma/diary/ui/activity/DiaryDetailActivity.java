@@ -51,7 +51,7 @@ public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPres
   }
 
   @Override
-  public void openNewEntry(int id) {
+  public void openNewEntry(long id) {
     Intent intent = AddDiaryEntryActivity.createIntent(this, id);
     startActivity(intent);
   }

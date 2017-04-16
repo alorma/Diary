@@ -14,7 +14,7 @@ public class AddDiaryEntryUseCase {
     this.entryAgent = entryAgent;
   }
 
-  public Completable getDiary(int id, EntryItemModel entryItemModel) {
+  public Completable getDiary(long id, EntryItemModel entryItemModel) {
     return entryAgent.addDiary(id, entryItemModel);
   }
 }

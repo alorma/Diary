@@ -4,7 +4,7 @@ import java.util.List;
 import polanski.option.Option;
 
 public class DiaryItemModel {
-  private int id;
+  private long id;
   private ContactItemModel contact;
   private EntryItemModel lastEntry;
   private List<EntryItemModel> entries;
@@ -25,11 +25,11 @@ public class DiaryItemModel {
     this.lastEntry = lastEntry;
   }
 
-  public int getId() {
+  public long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(long id) {
     this.id = id;
   }
 

@@ -1,9 +1,9 @@
 package com.alorma.diary.data.diary.agent;
 
 import android.net.Uri;
-import com.alorma.diary.data.diary.ds.Contact;
-import com.alorma.diary.data.diary.ds.Diary;
-import com.alorma.diary.data.diary.ds.Entry;
+import com.alorma.diary.data.diary.dbmodel.Contact;
+import com.alorma.diary.data.diary.dbmodel.Diary;
+import com.alorma.diary.data.diary.dbmodel.Entry;
 import com.alorma.diary.data.model.ContactItemModel;
 import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.data.model.DiaryListItemCreator;
@@ -91,7 +91,6 @@ public class DiaryMapper {
     @Override
     public Diary apply(DiaryListItemCreator creator) throws Exception {
       Diary diary = new Diary();
-      diary.setId(creator.getId());
       mapContact(diary, creator.getContact());
       return diary;
     }
