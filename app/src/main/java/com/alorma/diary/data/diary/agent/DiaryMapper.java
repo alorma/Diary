@@ -26,6 +26,14 @@ public class DiaryMapper {
         return o2.getDate().compareTo(o1.getDate());
       };
 
+  public Function<Diary, DiaryItemModel> mapDiary() {
+    return new DiaryMap();
+  }
+
+  public Function<DiaryListItemCreator, Diary> mapDiaryItemModel() {
+    return new DiaryItemModelMap();
+  }
+
   private class DiaryMap implements Function<Diary, DiaryItemModel> {
 
     @Override
@@ -98,13 +106,5 @@ public class DiaryMapper {
         diary.setContact(contact);
       }
     }
-  }
-
-  public Function<Diary, DiaryItemModel> mapDiary() {
-    return new DiaryMap();
-  }
-
-  public Function<DiaryListItemCreator, Diary> mapDiaryItemModel() {
-    return new DiaryItemModelMap();
   }
 }

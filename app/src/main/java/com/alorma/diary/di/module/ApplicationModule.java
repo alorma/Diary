@@ -7,6 +7,7 @@ import com.alorma.diary.data.diary.ds.MemoryDiaryListDataSource;
 import com.alorma.diary.data.error.ErrorTracker;
 import com.alorma.diary.di.qualifiers.ApplicationContext;
 import com.alorma.diary.di.qualifiers.Cache;
+import com.alorma.diary.di.qualifiers.DatabaseName;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
@@ -41,5 +42,12 @@ public class ApplicationModule {
   @Singleton
   DiaryListDataSource provideCacheDiaryList() {
     return new MemoryDiaryListDataSource();
+  }
+
+  @Provides
+  @Singleton
+  @DatabaseName
+  String dbName() {
+    return "diaries.db";
   }
 }

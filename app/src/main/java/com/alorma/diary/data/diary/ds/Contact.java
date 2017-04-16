@@ -1,6 +1,5 @@
 package com.alorma.diary.data.diary.ds;
 
-import android.net.Uri;
 import java.util.List;
 
 public class Contact {

@@ -41,11 +41,11 @@ public class DiaryItemModel {
     return false;
   }
 
-  public void setEntries(List<EntryItemModel> entries) {
-    this.entries = entries;
-  }
-
   public Option<List<EntryItemModel>> getEntries() {
     return Option.ofObj(entries);
+  }
+
+  public void setEntries(List<EntryItemModel> entries) {
+    this.entries = entries;
   }
 }

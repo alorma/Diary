@@ -45,7 +45,7 @@ public class AddDiaryPresenterTest {
     userValidator = spy(new UserTestValidator());
     diaryValidator = spy(new DiaryTestValidator());
 
-    presenter = new AddDiaryPresenter(useCase, diaryValidator, userValidator, scheduler, errorTracker);
+    presenter = new AddDiaryPresenter(useCase, diaryValidator, userValidator, null, scheduler, errorTracker);
     presenter.setScreen(screen);
   }
 

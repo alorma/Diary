@@ -12,6 +12,7 @@ import com.alorma.diary.data.model.EntryItemModel;
 import com.alorma.diary.di.component.ApplicationComponent;
 import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.component.FragmentComponent;
+import com.alorma.diary.di.module.FragmentModule;
 import com.alorma.diary.di.qualifiers.PerFragment;
 import com.alorma.diary.ui.presenter.AddDiaryEntryPresenter;
 import dagger.Component;
@@ -73,6 +74,7 @@ public class AddDiaryEntryFragment extends BaseFragment implements AddDiaryEntry
         .builder()
         .applicationComponent(mainComponent)
         .dataComponent(dataComponent)
+        .fragmentModule(new FragmentModule(this))
         .build()
         .inject(this);
   }
@@ -99,8 +101,14 @@ public class AddDiaryEntryFragment extends BaseFragment implements AddDiaryEntry
 
   }
 
+  @Override
+  public void onDestroy() {
+    presenter.destroy();
+    super.onDestroy();
+  }
+
   @PerFragment
-  @Component(dependencies = { ApplicationComponent.class, DataComponent.class })
+  @Component(dependencies = { ApplicationComponent.class, DataComponent.class }, modules = FragmentModule.class)
   public interface Provide extends FragmentComponent<AddDiaryEntryFragment> {
 
   }

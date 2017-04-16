@@ -17,6 +17,7 @@ import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.di.component.ApplicationComponent;
 import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.component.FragmentComponent;
+import com.alorma.diary.di.module.FragmentModule;
 import com.alorma.diary.di.qualifiers.PerFragment;
 import com.alorma.diary.ui.activity.AddDiaryActivity;
 import com.alorma.diary.ui.activity.DiaryDetailActivity;
@@ -28,10 +29,9 @@ import javax.inject.Inject;
 public class DiaryListFragment extends BaseFragment implements DiaryListPresenter.Screen, DiaryItemAdapter.Callback {
 
   @Inject DiaryListPresenter presenter;
-  private DiaryItemAdapter diaryItemAdapter;
-
   @BindView(R.id.recyclerView) RecyclerView recyclerView;
   @BindView(R.id.fabAddItems) FloatingActionButton fabAddItems;
+  private DiaryItemAdapter diaryItemAdapter;
 
   public static DiaryListFragment newInstance() {
     return new DiaryListFragment();
@@ -77,6 +77,7 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
         .builder()
         .applicationComponent(mainComponent)
         .dataComponent(dataComponent)
+        .fragmentModule(new FragmentModule(this))
         .build()
         .inject(this);
   }
@@ -133,8 +134,14 @@ public class DiaryListFragment extends BaseFragment implements DiaryListPresente
     startActivity(intent);
   }
 
+  @Override
+  public void onDestroy() {
+    presenter.destroy();
+    super.onDestroy();
+  }
+
   @PerFragment
-  @Component(dependencies = { ApplicationComponent.class, DataComponent.class })
+  @Component(dependencies = { ApplicationComponent.class, DataComponent.class }, modules = FragmentModule.class)
   public interface Provide extends FragmentComponent<DiaryListFragment> {
 
   }

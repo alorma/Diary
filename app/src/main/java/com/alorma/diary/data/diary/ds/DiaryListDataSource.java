@@ -1,7 +1,6 @@
 package com.alorma.diary.data.diary.ds;
 
 import io.reactivex.Completable;
-import io.reactivex.CompletableSource;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 

@@ -1,5 +1,6 @@
 package com.alorma.diary.ui.presenter;
 
+import com.alorma.diary.ResourceLifeCycle;
 import com.alorma.diary.data.diary.DiaryListUseCase;
 import com.alorma.diary.data.error.ErrorTracker;
 import com.alorma.diary.data.model.DiaryItemModel;
@@ -12,28 +13,31 @@ public class DiaryListPresenter {
 
   private DiaryListUseCase diaryListUseCase;
   private Scheduler mainScheduler;
+  private ResourceLifeCycle resourceLifeCycle;
   private ErrorTracker errorTracker;
   private Screen screen;
 
   @Inject
-  public DiaryListPresenter(DiaryListUseCase diaryListUseCase, @MainScheduler Scheduler mainScheduler,
+  public DiaryListPresenter(DiaryListUseCase diaryListUseCase,
+      @MainScheduler Scheduler mainScheduler,
+      ResourceLifeCycle resourceLifeCycle,
       ErrorTracker errorTracker) {
     this.diaryListUseCase = diaryListUseCase;
     this.mainScheduler = mainScheduler;
+    this.resourceLifeCycle = resourceLifeCycle;
     this.errorTracker = errorTracker;
-  }
-
-  public void setScreen(Screen screen) {
-    this.screen = screen;
   }
 
   private Screen getScreen() {
     return screen != null ? screen : new Screen.Null();
   }
 
+  public void setScreen(Screen screen) {
+    this.screen = screen;
+  }
+
   public void load() {
     diaryListUseCase.getDiaries().doOnSubscribe(this::onStartLoading)
-        /*.repeatWhen(observable -> observable.delay(2, TimeUnit.SECONDS))*/
         .observeOn(mainScheduler)
         .subscribe(this::onItemLoaded, this::onErrorLoadingItem, this::onAllItemsLoaded);
   }
@@ -58,6 +62,10 @@ public class DiaryListPresenter {
 
   public void stop() {
     this.screen = new Screen.Null();
+  }
+
+  public void destroy() {
+    resourceLifeCycle.destroy();
   }
 
   public void addNewItem() {

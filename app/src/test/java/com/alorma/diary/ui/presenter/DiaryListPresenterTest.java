@@ -31,7 +31,7 @@ public class DiaryListPresenterTest {
 
   @Before
   public void setUp() {
-    presenter = new DiaryListPresenter(useCase, scheduler, errorTracker);
+    presenter = new DiaryListPresenter(useCase, scheduler, null, errorTracker);
     presenter.setScreen(screen);
   }
 

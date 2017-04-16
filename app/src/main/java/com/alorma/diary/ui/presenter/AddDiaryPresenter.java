@@ -1,5 +1,6 @@
 package com.alorma.diary.ui.presenter;
 
+import com.alorma.diary.ResourceLifeCycle;
 import com.alorma.diary.data.Validator;
 import com.alorma.diary.data.diary.AddDiaryUseCase;
 import com.alorma.diary.data.error.ErrorTracker;
@@ -17,33 +18,36 @@ import javax.inject.Inject;
 
 public class AddDiaryPresenter {
 
+  private final Scheduler mainScheduler;
+  private final ErrorTracker errorTracker;
   private AddDiaryUseCase addDiaryUseCase;
   private Validator<DiaryListItemCreator> diaryCreatorValidator;
   private Validator<ContactItemModel> userValidator;
-  private final Scheduler mainScheduler;
-  private final ErrorTracker errorTracker;
+  private ResourceLifeCycle resourceLifeCycle;
   private Screen screen;
 
   @Inject
   public AddDiaryPresenter(AddDiaryUseCase addDiaryUseCase,
       Validator<DiaryListItemCreator> diaryCreatorValidator,
       @UserValidator Validator<ContactItemModel> userValidator,
+      ResourceLifeCycle resourceLifeCycle,
       @MainScheduler Scheduler mainScheduler,
       ErrorTracker errorTracker) {
     this.addDiaryUseCase = addDiaryUseCase;
     this.diaryCreatorValidator = diaryCreatorValidator;
     this.userValidator = userValidator;
+    this.resourceLifeCycle = resourceLifeCycle;
 
     this.mainScheduler = mainScheduler;
     this.errorTracker = errorTracker;
   }
 
-  public void setScreen(Screen screen) {
-    this.screen = screen;
-  }
-
   public Screen getScreen() {
     return screen != null ? screen : new Screen.Null();
+  }
+
+  public void setScreen(Screen screen) {
+    this.screen = screen;
   }
 
   public void addDiary(DiaryListItemCreator itemModel) {
@@ -65,6 +69,10 @@ public class AddDiaryPresenter {
 
   public void stop() {
     this.screen = new Screen.Null();
+  }
+
+  public void destroy() {
+    resourceLifeCycle.destroy();
   }
 
   private void onAddItemStart(Disposable disposable) {

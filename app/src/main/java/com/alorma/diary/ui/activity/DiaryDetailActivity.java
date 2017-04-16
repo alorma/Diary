@@ -158,6 +158,12 @@ public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPres
 
   }
 
+  @Override
+  protected void onDestroy() {
+    diaryDetailPresenter.destroy();
+    super.onDestroy();
+  }
+
   private static class Extras {
     public static final String DIARY_ID = "DIARY_ID";
   }

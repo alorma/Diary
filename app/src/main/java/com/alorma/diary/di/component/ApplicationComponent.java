@@ -8,6 +8,7 @@ import com.alorma.diary.data.error.ErrorTracker;
 import com.alorma.diary.di.module.ApplicationModule;
 import com.alorma.diary.di.qualifiers.ApplicationContext;
 import com.alorma.diary.di.qualifiers.Cache;
+import com.alorma.diary.di.qualifiers.DatabaseName;
 import dagger.Component;
 import javax.inject.Singleton;
 
@@ -26,4 +27,7 @@ public interface ApplicationComponent {
 
   @Cache
   DiaryListDataSource provideDataSource();
+
+  @DatabaseName
+  String provideDatabaseName();
 }

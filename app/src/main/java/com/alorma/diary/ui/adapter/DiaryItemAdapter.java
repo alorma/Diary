@@ -77,6 +77,10 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
     this.callback = callback;
   }
 
+  public interface Callback {
+    void onDiaryItemCLick(DiaryItemModel itemModel);
+  }
+
   public class Holder extends RecyclerView.ViewHolder {
     @BindView(R.id.text) TextView contactName;
     @BindView(R.id.entryTitle) TextView entryTitle;
@@ -132,9 +136,5 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
       entryContent.setText("No entries");
     }
     //endregion
-  }
-
-  public interface Callback {
-    void onDiaryItemCLick(DiaryItemModel itemModel);
   }
 }
