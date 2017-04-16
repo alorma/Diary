@@ -5,12 +5,12 @@ import com.afollestad.inquiry.Query;
 import com.alorma.diary.data.diary.dbmodel.Diary;
 import com.alorma.diary.data.diary.dbmodel.Entry;
 import com.alorma.diary.data.exception.DiaryNotAddedException;
+import com.alorma.diary.data.exception.EntryNotAddedException;
 import com.alorma.diary.di.qualifiers.IoScheduler;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
-import java.util.UUID;
 
 public class SqlDiaryListDataSource implements DiaryListDataSource {
   private Inquiry inquiry;
@@ -30,18 +30,16 @@ public class SqlDiaryListDataSource implements DiaryListDataSource {
 
   @Override
   public Single<Diary> addDiary(Diary model) {
-    return Single.just(model).map(this::addDiarySingle).flatMap(this::getDiary).subscribeOn(scheduler);
+    return Single.just(model).map(this::addDiarySingle).subscribeOn(scheduler);
   }
 
-  private Long addDiarySingle(Diary diary) throws DiaryNotAddedException {
-    diary.id = UUID.randomUUID().hashCode();
-    diary.user.id = UUID.randomUUID().hashCode();
+  private Diary addDiarySingle(Diary diary) throws DiaryNotAddedException {
     Diary[] diaries = { diary };
     Long[] insertedIds = inquiry.insert(Diary.class).values(diaries).run();
-    if (insertedIds != null) {
-      return insertedIds[0];
+    if (insertedIds == null || insertedIds.length == 0) {
+      throw new DiaryNotAddedException();
     }
-    throw new DiaryNotAddedException();
+    return diary;
   }
 
   @Override
@@ -51,6 +49,14 @@ public class SqlDiaryListDataSource implements DiaryListDataSource {
 
   @Override
   public Completable addEntry(long diaryId, Entry entry) {
-    return Completable.error(new Exception()).subscribeOn(scheduler);
+    return Completable.defer(() -> {
+      entry.diaryId = diaryId;
+      Entry[] entries = new Entry[] { entry };
+      Long[] run = inquiry.insert(Entry.class).values(entries).run();
+      if (run == null || run.length == 0) {
+        return Completable.error(new EntryNotAddedException());
+      }
+      return Completable.complete();
+    }).subscribeOn(scheduler);
   }
 }

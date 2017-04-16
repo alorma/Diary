@@ -69,6 +69,7 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
     contact.setComments(comments);
 
     DiaryListItemCreator itemCreator = new DiaryListItemCreator();
+    itemCreator.setName("Diary: " + UUID.randomUUID().toString().split("-")[0]);
     itemCreator.setContact(contact);
     return itemCreator;
   }

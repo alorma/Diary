@@ -51,7 +51,7 @@ public class AddDiaryEntryPresenter {
 
   public void addEntry(long diaryId, EntryItemModel entry) {
     validate(entry).toSingleDefault(entry)
-        .flatMapCompletable(entryItemModel -> addDiaryEntryUseCase.getDiary(diaryId, entryItemModel))
+        .flatMapCompletable(entryItemModel -> addDiaryEntryUseCase.addEntry(diaryId, entryItemModel))
         .observeOn(mainScheduler)
         .subscribe(() -> {
           getScreen().showEntryAdded();

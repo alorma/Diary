@@ -13,7 +13,10 @@ public class Diary {
   @ForeignKey(tableName = "user", foreignColumnName = "diaryId")
   public User user;
 
-  @ForeignKey(tableName = "entry", foreignColumnName = "diaryId")
+  @Column
+  private String name;
+
+  @ForeignKey(tableName = "entrys", foreignColumnName = "diaryId")
   public List<Entry> entries;
 
   public Diary() {
@@ -38,5 +41,13 @@ public class Diary {
 
   public void setEntries(List<Entry> entries) {
     this.entries = entries;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 }

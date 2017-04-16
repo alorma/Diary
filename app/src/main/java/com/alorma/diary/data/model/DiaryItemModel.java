@@ -8,6 +8,7 @@ public class DiaryItemModel {
   private ContactItemModel contact;
   private EntryItemModel lastEntry;
   private List<EntryItemModel> entries;
+  private String name;
 
   public Option<ContactItemModel> getContact() {
     return Option.ofObj(contact);
@@ -47,5 +48,13 @@ public class DiaryItemModel {
 
   public void setEntries(List<EntryItemModel> entries) {
     this.entries = entries;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
   }
 }

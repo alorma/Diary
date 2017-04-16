@@ -23,7 +23,7 @@ public class EntryAgent {
     this.workScheduler = workScheduler;
   }
 
-  public Completable addDiary(long diaryId, EntryItemModel model) {
+  public Completable addEntry(long diaryId, EntryItemModel model) {
     return Single.just(model)
         .map(entryMapper.mapEntryItemModel())
         .flatMapCompletable(entry -> dataSource.addEntry(diaryId, entry))

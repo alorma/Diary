@@ -40,6 +40,7 @@ public class DiaryMapper {
     public DiaryItemModel apply(Diary diary) throws Exception {
       DiaryItemModel diaryItemModel = new DiaryItemModel();
       diaryItemModel.setId(diary.getId());
+      diaryItemModel.setName(diary.getName());
       mapContact(diaryItemModel, diary.getUser());
       mapEntries(diaryItemModel, diary.getEntries());
       return diaryItemModel;
@@ -91,6 +92,7 @@ public class DiaryMapper {
     @Override
     public Diary apply(DiaryListItemCreator creator) throws Exception {
       Diary diary = new Diary();
+      diary.setName(creator.getName());
       mapContact(diary, creator.getContact());
       return diary;
     }
