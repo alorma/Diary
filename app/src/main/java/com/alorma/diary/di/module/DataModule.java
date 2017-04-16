@@ -17,7 +17,7 @@ import com.alorma.diary.data.user.validator.UserNameMandatoryValidator;
 import com.alorma.diary.di.qualifiers.ApplicationContext;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
 import com.alorma.diary.di.qualifiers.MainScheduler;
-import com.alorma.diary.di.qualifiers.NetScheduler;
+import com.alorma.diary.di.qualifiers.IoScheduler;
 import com.alorma.diary.di.qualifiers.user.UserValidator;
 import dagger.Module;
 import dagger.Provides;
@@ -29,7 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 public class DataModule {
 
   @Provides
-  @NetScheduler
+  @IoScheduler
   public Scheduler provideNetScheduler() {
     return Schedulers.io();
   }

@@ -1,7 +1,7 @@
 package com.alorma.diary.data.diary.agent;
 
 import android.net.Uri;
-import com.alorma.diary.data.diary.dbmodel.Contact;
+import com.alorma.diary.data.diary.dbmodel.User;
 import com.alorma.diary.data.diary.dbmodel.Diary;
 import com.alorma.diary.data.diary.dbmodel.Entry;
 import com.alorma.diary.data.model.ContactItemModel;
@@ -40,22 +40,22 @@ public class DiaryMapper {
     public DiaryItemModel apply(Diary diary) throws Exception {
       DiaryItemModel diaryItemModel = new DiaryItemModel();
       diaryItemModel.setId(diary.getId());
-      mapContact(diaryItemModel, diary.getContact());
+      mapContact(diaryItemModel, diary.getUser());
       mapEntries(diaryItemModel, diary.getEntries());
       return diaryItemModel;
     }
 
-    private void mapContact(DiaryItemModel model, Contact contact) {
-      if (contact != null) {
+    private void mapContact(DiaryItemModel model, User user) {
+      if (user != null) {
         ContactItemModel contactModel = new ContactItemModel();
-        contactModel.setName(contact.getName());
-        contactModel.setPhone(contact.getPhone());
+        contactModel.setName(user.getName());
+        contactModel.setPhone(user.getPhone());
 
-        String picture = contact.getPicture();
+        String picture = user.getPicture();
         if (picture != null) {
           contactModel.setPicture(Uri.parse(picture));
         }
-        contactModel.setComments(contact.getComments());
+        contactModel.setComments(user.getComments());
         model.setContact(contactModel);
       }
     }
@@ -97,12 +97,12 @@ public class DiaryMapper {
 
     private void mapContact(Diary diary, ContactItemModel contactItemModel) {
       if (contactItemModel != null) {
-        Contact contact = new Contact();
-        contact.setName(contactItemModel.getName());
-        contactItemModel.getPhone().ifSome(contact::setPhone);
-        contactItemModel.getPicture().map(Uri::toString).ifSome(contact::setPicture);
-        contactItemModel.getComments().ifSome(contact::setComments);
-        diary.setContact(contact);
+        User user = new User();
+        user.setName(contactItemModel.getName());
+        contactItemModel.getPhone().ifSome(user::setPhone);
+        contactItemModel.getPicture().map(Uri::toString).ifSome(user::setPicture);
+        contactItemModel.getComments().ifSome(user::setComments);
+        diary.setUser(user);
       }
     }
   }

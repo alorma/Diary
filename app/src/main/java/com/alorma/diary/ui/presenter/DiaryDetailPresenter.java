@@ -38,7 +38,7 @@ public class DiaryDetailPresenter {
     this.screen = screen;
   }
 
-  public void load(int id) {
+  public void load(long id) {
     getDiaryUseCase.getDiary(id)
         .observeOn(mainScheduler)
         .doOnSubscribe(disposable -> getScreen().startLoading())

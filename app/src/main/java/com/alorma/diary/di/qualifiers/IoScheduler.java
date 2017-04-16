@@ -8,5 +8,5 @@ import javax.inject.Qualifier;
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Named("IOScheuler")
-public @interface NetScheduler {
+public @interface IoScheduler {
 }

@@ -2,32 +2,30 @@ package com.alorma.diary.data.diary.dbmodel;
 
 import com.afollestad.inquiry.annotations.Column;
 import com.afollestad.inquiry.annotations.Table;
-import io.reactivex.annotations.Nullable;
 import java.util.List;
 
 @Table
-public class Contact {
+public class User {
 
   @Column(name = "_id", primaryKey = true, notNull = true, autoIncrement = true)
-  private long id;
+  public long id;
 
   @Column
-  private long diaryId;
+  public long diaryId;
 
   //@Column
-  private List<String> comments;
+  public List<String> comments;
 
   @Column
-  private String name;
+  public String name;
 
   @Column
-  private String phone;
+  public String phone;
 
   @Column
-  @Nullable
-  private String picture;
+  public String picture;
 
-  public Contact() {
+  public User() {
 
   }
 

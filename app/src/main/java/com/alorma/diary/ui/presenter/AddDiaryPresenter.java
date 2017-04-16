@@ -3,6 +3,7 @@ package com.alorma.diary.ui.presenter;
 import com.alorma.diary.ResourceLifeCycle;
 import com.alorma.diary.data.Validator;
 import com.alorma.diary.data.diary.AddDiaryUseCase;
+import com.alorma.diary.data.diary.dbmodel.Diary;
 import com.alorma.diary.data.error.ErrorTracker;
 import com.alorma.diary.data.exception.DiaryValidationContactException;
 import com.alorma.diary.data.exception.ValidationException;
@@ -53,11 +54,10 @@ public class AddDiaryPresenter {
   public void addDiary(DiaryListItemCreator itemModel) {
     validate(itemModel)
         .toSingleDefault(itemModel)
-        .flatMapCompletable(item -> addDiaryUseCase.addDiary(item))
+        .flatMap(item -> addDiaryUseCase.addDiary(item))
         .doOnSubscribe(this::onAddItemStart)
-        .doOnTerminate(this::onAddItemTerminate)
         .observeOn(mainScheduler)
-        .toSingleDefault(itemModel.getId())
+        .map(Diary::getId)
         .subscribe(this::onAddItemComplete, this::onAddItemFail);
   }
 
@@ -83,7 +83,7 @@ public class AddDiaryPresenter {
     getScreen().stopLoading();
   }
 
-  private void onAddItemComplete(int itemId) {
+  private void onAddItemComplete(long itemId) {
     getScreen().openDiaryScreenAndClose(itemId);
   }
 
@@ -107,7 +107,7 @@ public class AddDiaryPresenter {
 
     void stopLoading();
 
-    void openDiaryScreenAndClose(int id);
+    void openDiaryScreenAndClose(long id);
 
     void showError();
 
@@ -128,7 +128,7 @@ public class AddDiaryPresenter {
       }
 
       @Override
-      public void openDiaryScreenAndClose(int id) {
+      public void openDiaryScreenAndClose(long id) {
 
       }
 

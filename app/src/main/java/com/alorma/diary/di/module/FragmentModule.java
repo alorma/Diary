@@ -9,8 +9,10 @@ import com.alorma.diary.data.diary.ds.SqlDiaryListDataSource;
 import com.alorma.diary.di.qualifiers.ActivityContext;
 import com.alorma.diary.di.qualifiers.Cache;
 import com.alorma.diary.di.qualifiers.DatabaseName;
+import com.alorma.diary.di.qualifiers.IoScheduler;
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Scheduler;
 
 @Module
 public class FragmentModule {
@@ -28,9 +30,10 @@ public class FragmentModule {
 
   @Provides
   @Cache
-  DiaryListDataSource provideCacheDiaryList(@ActivityContext Context context, @DatabaseName String dbName) {
+  DiaryListDataSource provideCacheDiaryList(@ActivityContext Context context, @DatabaseName String dbName,
+      @IoScheduler Scheduler scheduler) {
     Inquiry.newInstance(context, dbName).build();
-    return new SqlDiaryListDataSource(Inquiry.get(context));
+    return new SqlDiaryListDataSource(Inquiry.get(context), scheduler);
   }
 
   @Provides

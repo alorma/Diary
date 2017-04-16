@@ -1,6 +1,7 @@
 package com.alorma.diary.ui.presenter;
 
 import com.alorma.diary.data.diary.AddDiaryUseCase;
+import com.alorma.diary.data.diary.dbmodel.Diary;
 import com.alorma.diary.data.error.ErrorTracker;
 import com.alorma.diary.data.exception.DiaryValidationContactException;
 import com.alorma.diary.data.exception.user.validation.UserValidationNameException;
@@ -10,6 +11,7 @@ import com.alorma.diary.ui.presenter.validator.DiaryTestValidator;
 import com.alorma.diary.ui.presenter.validator.UserTestValidator;
 import io.reactivex.Completable;
 import io.reactivex.Scheduler;
+import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import org.junit.Before;
 import org.junit.Rule;
@@ -51,7 +53,7 @@ public class AddDiaryPresenterTest {
 
   @Test
   public void should_call_screen_show_loading_when_add_item_successfully() {
-    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Completable.complete());
+    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Single.just(mock(Diary.class)));
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 
@@ -60,7 +62,7 @@ public class AddDiaryPresenterTest {
 
   @Test
   public void should_call_screen_stop_loading_when_add_item_successfully() {
-    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Completable.complete());
+    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Single.just(mock(Diary.class)));
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 
@@ -69,7 +71,7 @@ public class AddDiaryPresenterTest {
 
   @Test
   public void should_call_screen_close_add_screen_when_add_item_successfully() {
-    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Completable.complete());
+    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Single.just(mock(Diary.class)));
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 
@@ -78,7 +80,7 @@ public class AddDiaryPresenterTest {
 
   @Test
   public void should_call_screen_show_error_when_add_item_fail() {
-    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Completable.error(new Exception()));
+    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Single.error(new Exception()));
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 
@@ -117,7 +119,7 @@ public class AddDiaryPresenterTest {
 
   @Test
   public void should_call_error_tracker_when_add_item_fail() {
-    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Completable.error(new Exception()));
+    given(useCase.addDiary(any(DiaryListItemCreator.class))).willReturn(Single.error(new Exception()));
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 

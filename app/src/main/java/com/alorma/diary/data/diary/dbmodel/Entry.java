@@ -8,19 +8,19 @@ import java.util.Date;
 public class Entry {
 
   @Column(name = "_id", primaryKey = true, notNull = true, autoIncrement = true)
-  private long id;
+  public long id;
 
   @Column
-  private long diaryId;
+  public long diaryId;
 
   @Column
-  private Date date;
+  public Date date;
 
   @Column
-  private String subject;
+  public String subject;
 
   @Column
-  private String content;
+  public String content;
 
   public Entry() {
 

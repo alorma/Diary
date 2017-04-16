@@ -9,9 +9,9 @@ import io.reactivex.Single;
 public interface DiaryListDataSource {
   Flowable<Diary> getDiaries();
 
-  Completable addDiary(Diary model);
+  Single<Diary> addDiary(Diary model);
 
-  Single<Diary> getDiary(int id);
+  Single<Diary> getDiary(long id);
 
   Completable addEntry(long diaryId, Entry entry);
 }

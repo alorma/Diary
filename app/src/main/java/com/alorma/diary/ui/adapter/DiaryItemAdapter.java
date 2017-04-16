@@ -102,7 +102,7 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
       model.getLastEntry().ifSome(this::handleEntry).ifNone(this::handleNoEntries);
     }
 
-    // region Contact
+    // region User
     private void handleContact(ContactItemModel contactItemModel) {
       setContactName(contactItemModel);
 

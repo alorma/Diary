@@ -21,7 +21,7 @@
         android:id="@+id/text"
         android:textSize="22sp"
         android:gravity="center_vertical"
-        tools:text="User contact"
+        tools:text="User user"
         android:paddingStart="16dp"
         />
 

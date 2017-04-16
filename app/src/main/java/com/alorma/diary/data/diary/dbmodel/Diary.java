@@ -8,13 +8,13 @@ import java.util.List;
 @Table
 public class Diary {
   @Column(name = "_id", primaryKey = true, notNull = true, autoIncrement = true)
-  private long id;
+  public long id;
 
-  @ForeignKey(tableName = "contacts", foreignColumnName = "diaryId")
-  private Contact contact;
+  @ForeignKey(tableName = "user", foreignColumnName = "diaryId")
+  public User user;
 
-  @ForeignKey(tableName = "entrys", foreignColumnName = "diaryId")
-  private List<Entry> entries;
+  @ForeignKey(tableName = "entry", foreignColumnName = "diaryId")
+  public List<Entry> entries;
 
   public Diary() {
 
@@ -24,12 +24,12 @@ public class Diary {
     return id;
   }
 
-  public Contact getContact() {
-    return contact;
+  public User getUser() {
+    return user;
   }
 
-  public void setContact(Contact contact) {
-    this.contact = contact;
+  public void setUser(User user) {
+    this.user = user;
   }
 
   public List<Entry> getEntries() {

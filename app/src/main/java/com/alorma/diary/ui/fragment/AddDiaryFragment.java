@@ -70,7 +70,6 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
 
     DiaryListItemCreator itemCreator = new DiaryListItemCreator();
     itemCreator.setContact(contact);
-    itemCreator.setId(random.nextInt());
     return itemCreator;
   }
 
@@ -108,7 +107,7 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
   }
 
   @Override
-  public void openDiaryScreenAndClose(int itemId) {
+  public void openDiaryScreenAndClose(long itemId) {
     Intent intent = DiaryDetailActivity.createIntent(getContext(), itemId);
     startActivity(intent);
     getActivity().finish();
@@ -126,7 +125,7 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
 
   @Override
   public void showContactInvalid() {
-    Toast.makeText(getContext(), "Invalid contact", Toast.LENGTH_SHORT).show();
+    Toast.makeText(getContext(), "Invalid user", Toast.LENGTH_SHORT).show();
   }
 
   @Override

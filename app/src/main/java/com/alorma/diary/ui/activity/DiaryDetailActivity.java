@@ -27,7 +27,7 @@ public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPres
     return intent;
   }
 
-  public static Intent createIntent(Context context, int diaryId) {
+  public static Intent createIntent(Context context, long diaryId) {
     Intent intent = new Intent(context, DiaryDetailActivity.class);
     intent.putExtra(Extras.DIARY_ID, diaryId);
     return intent;
@@ -64,7 +64,7 @@ public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPres
   }
 
   private void loadData() {
-    int diaryId = getIntent().getExtras().getInt(Extras.DIARY_ID);
+    long diaryId = getIntent().getExtras().getLong(Extras.DIARY_ID);
     diaryDetailPresenter.load(diaryId);
   }
 

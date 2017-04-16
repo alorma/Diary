@@ -12,7 +12,7 @@ import com.alorma.diary.di.module.ApplicationModule;
 import com.alorma.diary.di.module.DataModule;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
 import com.alorma.diary.di.qualifiers.MainScheduler;
-import com.alorma.diary.di.qualifiers.NetScheduler;
+import com.alorma.diary.di.qualifiers.IoScheduler;
 import com.alorma.diary.di.qualifiers.user.UserValidator;
 import com.alorma.diary.ui.activity.MainActivity;
 import dagger.Component;
@@ -26,7 +26,7 @@ public interface DataComponent {
   @MainScheduler
   Scheduler provideMainScheduler();
 
-  @NetScheduler
+  @IoScheduler
   Scheduler provideNetScheduler();
 
   @ComputationScheduler
