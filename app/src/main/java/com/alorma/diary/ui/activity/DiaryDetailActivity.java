@@ -9,8 +9,11 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.R;
+import com.alorma.diary.data.diary.dbmodel.EntryType;
 import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.data.model.EntryItemModel;
+import com.alorma.diary.data.model.EntryMessageItemModel;
+import com.alorma.diary.data.model.EntryPhotoItemModel;
 import com.alorma.diary.di.component.ActivityComponent;
 import com.alorma.diary.ui.presenter.DiaryDetailPresenter;
 import java.util.UUID;
@@ -137,13 +140,39 @@ public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPres
         textView.append("\n");
         textView.append(entry.getEntryType().name());
         textView.append("\n");
-        textView.append(entry.getContent());
+        printEntry(entry, textView);
         textView.append("\n");
         textView.append("\n");
       }
     }).ifNone(() -> {
       textView.append("\n");
       textView.append("No entries");
+    });
+  }
+
+  private void printEntry(EntryItemModel entry, TextView textView) {
+    if (entry.getEntryType() == EntryType.MESSAGE) {
+      printEntryMessage((EntryMessageItemModel) entry, textView);
+    } else if (entry.getEntryType() == EntryType.PHOTO) {
+      printEntryPhoto((EntryPhotoItemModel) entry, textView);
+    }
+  }
+
+  private void printEntryMessage(EntryMessageItemModel entry, TextView textView) {
+    textView.append(entry.getContent());
+  }
+
+  private void printEntryPhoto(EntryPhotoItemModel entry, TextView textView) {
+    if (entry.getUri() != null) {
+      textView.append(entry.getUri().toString());
+    }
+    entry.getPhotoName().ifSome(s -> {
+      textView.append("\n");
+      textView.append(s);
+    });
+    entry.getPhotoDescription().ifSome(s -> {
+      textView.append("\n");
+      textView.append(s);
     });
   }
 

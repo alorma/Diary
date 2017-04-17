@@ -5,9 +5,12 @@ import polanski.option.Option;
 
 public class EntryItemModel {
   private String subject;
-  private String content;
   private long postedDate;
-  private EntryType entryType;
+  private final EntryType entryType;
+
+  public EntryItemModel(EntryType entryType) {
+    this.entryType = entryType;
+  }
 
   public Option<String> getSubject() {
     return Option.ofObj(subject);
@@ -17,24 +20,12 @@ public class EntryItemModel {
     this.subject = subject;
   }
 
-  public String getContent() {
-    return content;
-  }
-
-  public void setContent(String content) {
-    this.content = content;
-  }
-
   public long getPostedDate() {
     return postedDate;
   }
 
   public void setPostedDate(long postedDate) {
     this.postedDate = postedDate;
-  }
-
-  public void setEntryType(EntryType entryType) {
-    this.entryType = entryType;
   }
 
   public EntryType getEntryType() {

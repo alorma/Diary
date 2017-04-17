@@ -1,5 +1,6 @@
 package com.alorma.diary.data.diary.dbmodel;
 
+import android.net.Uri;
 import java.util.Date;
 
 public class Entry {
@@ -8,6 +9,9 @@ public class Entry {
   private Date date;
   private String subject;
   private String content;
+  private String photoUri;
+  private String photoName;
+  private String photoDescription;
 
   public Entry() {
 
@@ -51,5 +55,29 @@ public class Entry {
 
   public void setEntryType(EntryType entryType) {
     this.entryType = entryType;
+  }
+
+  public String getPhotoUri() {
+    return photoUri;
+  }
+
+  public void setPhotoUri(String photoUri) {
+    this.photoUri = photoUri;
+  }
+
+  public String getPhotoName() {
+    return photoName;
+  }
+
+  public void setPhotoName(String photoName) {
+    this.photoName = photoName;
+  }
+
+  public String getPhotoDescription() {
+    return photoDescription;
+  }
+
+  public void setPhotoDescription(String photoDescription) {
+    this.photoDescription = photoDescription;
   }
 }

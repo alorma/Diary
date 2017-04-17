@@ -128,8 +128,10 @@ public class DiaryItemAdapter extends RecyclerView.Adapter<DiaryItemAdapter.Hold
 
     //region Entry
     private void handleEntry(EntryItemModel entryModel) {
-      entryModel.getSubject().ifSome(title -> entryTitle.setText(title));
-      entryContent.setText(entryModel.getContent());
+      entryModel.getSubject().ifSome(title -> entryTitle.setText(title)).ifNone(() -> {
+        entryTitle.setText("No subject");
+      });
+      entryContent.setText(entryModel.getEntryType().name());
     }
 
     private void handleNoEntries() {

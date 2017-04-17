@@ -1,5 +1,6 @@
 package com.alorma.diary.ui.fragment;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import butterknife.ButterKnife;
 import com.alorma.diary.R;
 import com.alorma.diary.data.diary.dbmodel.EntryType;
 import com.alorma.diary.data.model.EntryItemModel;
+import com.alorma.diary.data.model.EntryMessageItemModel;
+import com.alorma.diary.data.model.EntryPhotoItemModel;
 import com.alorma.diary.di.component.ApplicationComponent;
 import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.component.FragmentComponent;
@@ -25,7 +28,9 @@ public class AddDiaryEntryFragment extends BaseFragment implements AddDiaryEntry
 
   @Inject AddDiaryEntryPresenter presenter;
 
-  @BindView(R.id.addItem) View addItemView;
+  @BindView(R.id.addMessageItem) View addMessageItemView;
+  @BindView(R.id.addPhotoItem) View addPhotoItemView;
+
   private UUID diaryId;
 
   public static AddDiaryEntryFragment newInstance(UUID id) {
@@ -49,23 +54,37 @@ public class AddDiaryEntryFragment extends BaseFragment implements AddDiaryEntry
     ButterKnife.bind(this, view);
 
     readArguments();
-    addItemView.setOnClickListener(v -> onAddViewClick());
+    addMessageItemView.setOnClickListener(v -> onAddMessageViewClick());
+    addPhotoItemView.setOnClickListener(v -> onAddPhotoViewClick());
   }
 
   private void readArguments() {
     diaryId = (UUID) getArguments().getSerializable(Extras.DIARY_ID);
   }
 
-  private void onAddViewClick() {
-    presenter.addEntry(diaryId, getEntry());
+  private void onAddMessageViewClick() {
+    presenter.addEntry(diaryId, getMessageEntry());
   }
 
-  private EntryItemModel getEntry() {
+  private EntryItemModel getMessageEntry() {
     Random random = new Random();
-    EntryItemModel model = new EntryItemModel();
+    EntryMessageItemModel model = new EntryMessageItemModel();
     model.setSubject("Random entry: " + random.nextGaussian());
     model.setContent("Lorem ipsum generated: " + UUID.randomUUID());
-    model.setEntryType(EntryType.MESSAGE);
+    model.setPostedDate(System.currentTimeMillis());
+    return model;
+  }
+
+  private void onAddPhotoViewClick() {
+    presenter.addEntry(diaryId, getPhotoEntry());
+  }
+
+  private EntryItemModel getPhotoEntry() {
+    Random random = new Random();
+    EntryPhotoItemModel model = new EntryPhotoItemModel();
+    model.setUri(Uri.parse("https://raw.githubusercontent.com/pilgr/Paper/master/paper_icon.png"));
+    model.setPhotoDescription("Paper icon for Paper repo readme");
+    model.setPhotoName("paper_icon.png");
     model.setPostedDate(System.currentTimeMillis());
     return model;
   }

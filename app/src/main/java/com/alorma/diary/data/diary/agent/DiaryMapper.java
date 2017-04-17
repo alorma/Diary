@@ -1,13 +1,17 @@
 package com.alorma.diary.data.diary.agent;
 
 import android.net.Uri;
-import com.alorma.diary.data.diary.dbmodel.User;
+import android.support.annotation.NonNull;
 import com.alorma.diary.data.diary.dbmodel.Diary;
 import com.alorma.diary.data.diary.dbmodel.Entry;
+import com.alorma.diary.data.diary.dbmodel.EntryType;
+import com.alorma.diary.data.diary.dbmodel.User;
 import com.alorma.diary.data.model.ContactItemModel;
 import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.data.model.DiaryListItemCreator;
 import com.alorma.diary.data.model.EntryItemModel;
+import com.alorma.diary.data.model.EntryMessageItemModel;
+import com.alorma.diary.data.model.EntryPhotoItemModel;
 import io.reactivex.functions.Function;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -77,14 +81,39 @@ public class DiaryMapper {
     }
 
     private EntryItemModel mapEntry(Entry entry) {
-      EntryItemModel model = new EntryItemModel();
+      if (entry.getEntryType() == EntryType.MESSAGE) {
+        return getEntryMessageItemModel(entry);
+      } else if (entry.getEntryType() == EntryType.PHOTO) {
+        return getEntryPhotoItemModel(entry);
+      }
+      return null;
+    }
+
+    @NonNull
+    private EntryItemModel getEntryMessageItemModel(Entry entry) {
+      EntryMessageItemModel model = new EntryMessageItemModel();
       model.setSubject(entry.getSubject());
       model.setContent(entry.getContent());
       Date date = entry.getDate();
       if (date != null) {
         model.setPostedDate(date.getTime());
       }
-      model.setEntryType(entry.getEntryType());
+      return model;
+    }
+
+    @NonNull
+    private EntryItemModel getEntryPhotoItemModel(Entry entry) {
+      EntryPhotoItemModel model = new EntryPhotoItemModel();
+      model.setSubject(entry.getSubject());
+      Date date = entry.getDate();
+      if (date != null) {
+        model.setPostedDate(date.getTime());
+      }
+      if (entry.getPhotoUri() != null) {
+        model.setUri(Uri.parse(entry.getPhotoUri()));
+      }
+      model.setPhotoName(entry.getPhotoName());
+      model.setPhotoDescription(entry.getPhotoDescription());
       return model;
     }
   }
