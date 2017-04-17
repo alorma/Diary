@@ -1,5 +1,7 @@
 package com.alorma.diary.ui.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +11,6 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.R;
-import com.alorma.diary.data.diary.dbmodel.EntryType;
 import com.alorma.diary.data.model.EntryItemModel;
 import com.alorma.diary.data.model.EntryMessageItemModel;
 import com.alorma.diary.data.model.EntryPhotoItemModel;
@@ -25,6 +26,8 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 public class AddDiaryEntryFragment extends BaseFragment implements AddDiaryEntryPresenter.Screen {
+
+  private static final int REQUEST_CODE_PHOTO = 121;
 
   @Inject AddDiaryEntryPresenter presenter;
 
@@ -76,17 +79,28 @@ public class AddDiaryEntryFragment extends BaseFragment implements AddDiaryEntry
   }
 
   private void onAddPhotoViewClick() {
-    presenter.addEntry(diaryId, getPhotoEntry());
+    Intent intent = new Intent();
+    intent.setType("image/*");
+    intent.setAction(Intent.ACTION_GET_CONTENT);
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+    startActivityForResult(intent, REQUEST_CODE_PHOTO);
   }
 
-  private EntryItemModel getPhotoEntry() {
-    Random random = new Random();
+  private EntryItemModel getPhotoEntry(Uri uri) {
     EntryPhotoItemModel model = new EntryPhotoItemModel();
-    model.setUri(Uri.parse("https://raw.githubusercontent.com/pilgr/Paper/master/paper_icon.png"));
-    model.setPhotoDescription("Paper icon for Paper repo readme");
-    model.setPhotoName("paper_icon.png");
+    model.setUri(uri);
+    model.setPhotoName(uri.getLastPathSegment());
     model.setPostedDate(System.currentTimeMillis());
     return model;
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == REQUEST_CODE_PHOTO && resultCode == Activity.RESULT_OK) {
+      EntryItemModel photoEntry = getPhotoEntry(data.getData());
+      presenter.addEntry(diaryId, photoEntry);
+    }
   }
 
   @Override
