@@ -134,6 +134,9 @@ public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPres
           textView.append(s);
         });
         textView.append("\n");
+        textView.append("\n");
+        textView.append(entry.getEntryType().name());
+        textView.append("\n");
         textView.append(entry.getContent());
         textView.append("\n");
         textView.append("\n");

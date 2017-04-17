@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.diary.R;
+import com.alorma.diary.data.diary.dbmodel.EntryType;
 import com.alorma.diary.data.model.EntryItemModel;
 import com.alorma.diary.di.component.ApplicationComponent;
 import com.alorma.diary.di.component.DataComponent;
@@ -64,6 +65,7 @@ public class AddDiaryEntryFragment extends BaseFragment implements AddDiaryEntry
     EntryItemModel model = new EntryItemModel();
     model.setSubject("Random entry: " + random.nextGaussian());
     model.setContent("Lorem ipsum generated: " + UUID.randomUUID());
+    model.setEntryType(EntryType.MESSAGE);
     model.setPostedDate(System.currentTimeMillis());
     return model;
   }

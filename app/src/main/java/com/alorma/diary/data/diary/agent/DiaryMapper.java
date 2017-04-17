@@ -84,6 +84,7 @@ public class DiaryMapper {
       if (date != null) {
         model.setPostedDate(date.getTime());
       }
+      model.setEntryType(entry.getEntryType());
       return model;
     }
   }

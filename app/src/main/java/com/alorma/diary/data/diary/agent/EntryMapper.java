@@ -12,6 +12,7 @@ public class EntryMapper {
       entry.setContent(entryItemModel.getContent());
       entry.setDate(new Date(entryItemModel.getPostedDate()));
       entryItemModel.getSubject().ifSome(entry::setSubject);
+      entry.setEntryType(entryItemModel.getEntryType());
       return entry;
     };
   }

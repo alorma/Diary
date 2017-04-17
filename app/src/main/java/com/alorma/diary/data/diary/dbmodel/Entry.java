@@ -3,10 +3,11 @@ package com.alorma.diary.data.diary.dbmodel;
 import java.util.Date;
 
 public class Entry {
-  public long id;
-  public Date date;
-  public String subject;
-  public String content;
+  private long id;
+  private EntryType entryType;
+  private Date date;
+  private String subject;
+  private String content;
 
   public Entry() {
 
@@ -38,5 +39,17 @@ public class Entry {
 
   public long getId() {
     return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public EntryType getEntryType() {
+    return entryType;
+  }
+
+  public void setEntryType(EntryType entryType) {
+    this.entryType = entryType;
   }
 }
