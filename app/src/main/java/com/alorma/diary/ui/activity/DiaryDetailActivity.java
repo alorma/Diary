@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,15 +18,20 @@ import com.alorma.diary.data.model.EntryItemModel;
 import com.alorma.diary.data.model.EntryMessageItemModel;
 import com.alorma.diary.data.model.EntryPhotoItemModel;
 import com.alorma.diary.di.component.ActivityComponent;
+import com.alorma.diary.ui.adapter.EntryAdapter;
 import com.alorma.diary.ui.presenter.DiaryDetailPresenter;
+import java.util.List;
 import java.util.UUID;
 import javax.inject.Inject;
+import polanski.option.Option;
 
 public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPresenter.Screen {
 
   @Inject DiaryDetailPresenter diaryDetailPresenter;
   @BindView(R.id.text) TextView textView;
   @BindView(R.id.fabAddEntries) FloatingActionButton fab;
+  @BindView(R.id.recyclerEntries) RecyclerView recyclerViewEntries;
+  private EntryAdapter adapter;
 
   public static Intent createIntent(Context context, DiaryItemModel itemModel) {
     Intent intent = new Intent(context, DiaryDetailActivity.class);
@@ -90,10 +98,19 @@ public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPres
 
   @Override
   public void showDiary(DiaryItemModel itemModel) {
+    createAdapter();
+    recyclerViewEntries.setLayoutManager(new LinearLayoutManager(this));
+    recyclerViewEntries.setAdapter(adapter);
+
     textView.setText("");
     textView.append("Diary ::" + itemModel.getId());
     showContact(itemModel);
-    showEntries(itemModel);
+
+    itemModel.getEntries().ifSome(entries -> adapter.addAll(entries));
+  }
+
+  private void createAdapter() {
+    adapter = new EntryAdapter(LayoutInflater.from(this));
   }
 
   @Override
