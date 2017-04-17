@@ -3,6 +3,7 @@ package com.alorma.diary.data.diary;
 import com.alorma.diary.data.diary.agent.DiariesAgent;
 import com.alorma.diary.data.model.DiaryItemModel;
 import io.reactivex.Single;
+import java.util.UUID;
 import javax.inject.Inject;
 
 public class GetDiaryUseCase {
@@ -14,7 +15,7 @@ public class GetDiaryUseCase {
     this.diariesAgent = diariesAgent;
   }
 
-  public Single<DiaryItemModel> getDiary(long id) {
+  public Single<DiaryItemModel> getDiary(UUID id) {
     return diariesAgent.getDiary(id);
   }
 }

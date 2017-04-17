@@ -8,10 +8,11 @@ import butterknife.ButterKnife;
 import com.alorma.diary.R;
 import com.alorma.diary.di.component.ActivityComponent;
 import com.alorma.diary.ui.fragment.AddDiaryEntryFragment;
+import java.util.UUID;
 
 public class AddDiaryEntryActivity extends BaseBackActivity {
 
-  public static Intent createIntent(Context context, long id) {
+  public static Intent createIntent(Context context, UUID id) {
     Intent intent = new Intent(context, AddDiaryEntryActivity.class);
     intent.putExtra(Extras.DIARY_ID, id);
     return intent;
@@ -27,7 +28,7 @@ public class AddDiaryEntryActivity extends BaseBackActivity {
       throw new RuntimeException("Should never happen: " + DiaryDetailActivity.class.getCanonicalName());
     }
 
-    long diaryId = getIntent().getExtras().getLong(Extras.DIARY_ID);
+    UUID diaryId = (UUID) getIntent().getExtras().getSerializable(Extras.DIARY_ID);
     AddDiaryEntryFragment fragment = AddDiaryEntryFragment.newInstance(diaryId);
     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
   }

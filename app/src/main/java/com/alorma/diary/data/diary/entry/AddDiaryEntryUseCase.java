@@ -3,6 +3,7 @@ package com.alorma.diary.data.diary.entry;
 import com.alorma.diary.data.diary.agent.EntryAgent;
 import com.alorma.diary.data.model.EntryItemModel;
 import io.reactivex.Completable;
+import java.util.UUID;
 import javax.inject.Inject;
 
 public class AddDiaryEntryUseCase {
@@ -14,7 +15,7 @@ public class AddDiaryEntryUseCase {
     this.entryAgent = entryAgent;
   }
 
-  public Completable addEntry(long id, EntryItemModel entryItemModel) {
+  public Completable addEntry(UUID id, EntryItemModel entryItemModel) {
     return entryAgent.addEntry(id, entryItemModel);
   }
 }

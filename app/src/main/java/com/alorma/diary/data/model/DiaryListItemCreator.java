@@ -1,7 +1,9 @@
 package com.alorma.diary.data.model;
 
+import java.util.UUID;
+
 public class DiaryListItemCreator {
-  private Integer id;
+  private UUID id;
   private ContactItemModel contact;
   private String name;
 
@@ -13,11 +15,11 @@ public class DiaryListItemCreator {
     this.contact = contact;
   }
 
-  public Integer getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 

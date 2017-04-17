@@ -8,6 +8,7 @@ import com.alorma.diary.data.model.EntryItemModel;
 import com.alorma.diary.di.qualifiers.MainScheduler;
 import io.reactivex.Completable;
 import io.reactivex.Scheduler;
+import java.util.UUID;
 import javax.inject.Inject;
 
 public class AddDiaryEntryPresenter {
@@ -49,7 +50,7 @@ public class AddDiaryEntryPresenter {
     resourceLifeCycle.destroy();
   }
 
-  public void addEntry(long diaryId, EntryItemModel entry) {
+  public void addEntry(UUID diaryId, EntryItemModel entry) {
     validate(entry).toSingleDefault(entry)
         .flatMapCompletable(entryItemModel -> addDiaryEntryUseCase.addEntry(diaryId, entryItemModel))
         .observeOn(mainScheduler)

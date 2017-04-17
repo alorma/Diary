@@ -8,6 +8,7 @@ import com.alorma.diary.di.component.DaggerDataComponent;
 import com.alorma.diary.di.component.DataComponent;
 import com.alorma.diary.di.module.ApplicationModule;
 import com.alorma.diary.di.module.DataModule;
+import com.pacoworks.rxpaper2.RxPaperBook;
 
 public class DiaryApplication extends Application {
 
@@ -21,6 +22,9 @@ public class DiaryApplication extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
+
+    RxPaperBook.init(this);
+
     ApplicationModule applicationModule = new ApplicationModule(this);
 
     applicationComponent = DaggerApplicationComponent

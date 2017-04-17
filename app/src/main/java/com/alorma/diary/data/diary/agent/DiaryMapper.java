@@ -15,6 +15,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public class DiaryMapper {
 
@@ -92,6 +93,9 @@ public class DiaryMapper {
     @Override
     public Diary apply(DiaryListItemCreator creator) throws Exception {
       Diary diary = new Diary();
+      if (creator.getId() == null) {
+        diary.setId(UUID.randomUUID());
+      }
       diary.setName(creator.getName());
       mapContact(diary, creator.getContact());
       return diary;

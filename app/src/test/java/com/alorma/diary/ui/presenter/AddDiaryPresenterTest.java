@@ -13,6 +13,7 @@ import io.reactivex.Completable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
+import java.util.UUID;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -75,7 +76,7 @@ public class AddDiaryPresenterTest {
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 
-    verify(screen).openDiaryScreenAndClose(anyInt());
+    verify(screen).openDiaryScreenAndClose(any(UUID.class));
   }
 
   @Test
@@ -100,7 +101,7 @@ public class AddDiaryPresenterTest {
 
     presenter.addDiary(listItemModel);
 
-    verify(screen, never()).openDiaryScreenAndClose(anyInt());
+    verify(screen, never()).openDiaryScreenAndClose(any(UUID.class));
     verify(screen).stopLoading();
     verify(screen).showInvalidName();
   }
@@ -112,7 +113,7 @@ public class AddDiaryPresenterTest {
 
     presenter.addDiary(mock(DiaryListItemCreator.class));
 
-    verify(screen, never()).openDiaryScreenAndClose(anyInt());
+    verify(screen, never()).openDiaryScreenAndClose(any(UUID.class));
     verify(screen).stopLoading();
     verify(screen).showInvalidName();
   }

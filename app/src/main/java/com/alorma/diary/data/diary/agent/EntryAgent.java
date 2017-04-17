@@ -7,6 +7,7 @@ import com.alorma.diary.di.qualifiers.ComputationScheduler;
 import io.reactivex.Completable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
+import java.util.UUID;
 import javax.inject.Inject;
 
 public class EntryAgent {
@@ -23,7 +24,7 @@ public class EntryAgent {
     this.workScheduler = workScheduler;
   }
 
-  public Completable addEntry(long diaryId, EntryItemModel model) {
+  public Completable addEntry(UUID diaryId, EntryItemModel model) {
     return Single.just(model)
         .map(entryMapper.mapEntryItemModel())
         .flatMapCompletable(entry -> dataSource.addEntry(diaryId, entry))

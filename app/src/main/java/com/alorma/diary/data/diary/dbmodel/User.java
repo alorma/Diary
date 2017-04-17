@@ -1,28 +1,13 @@
 package com.alorma.diary.data.diary.dbmodel;
 
-import com.afollestad.inquiry.annotations.Column;
-import com.afollestad.inquiry.annotations.Table;
 import java.util.List;
 
-@Table
 public class User {
-
-  @Column(name = "_id", primaryKey = true, notNull = true, autoIncrement = true)
   public long id;
-
-  @Column
   public long diaryId;
-
-  //@Column
   public List<String> comments;
-
-  @Column
   public String name;
-
-  @Column
   public String phone;
-
-  @Column
   public String picture;
 
   public User() {

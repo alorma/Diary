@@ -1,29 +1,19 @@
 package com.alorma.diary.data.diary.dbmodel;
 
-import com.afollestad.inquiry.annotations.Column;
-import com.afollestad.inquiry.annotations.ForeignKey;
-import com.afollestad.inquiry.annotations.Table;
 import java.util.List;
+import java.util.UUID;
 
-@Table
 public class Diary {
-  @Column(name = "_id", primaryKey = true, notNull = true, autoIncrement = true)
-  public long id;
-
-  @ForeignKey(tableName = "user", foreignColumnName = "diaryId")
+  public UUID id;
   public User user;
-
-  @Column
   private String name;
-
-  @ForeignKey(tableName = "entrys", foreignColumnName = "diaryId")
   public List<Entry> entries;
 
   public Diary() {
 
   }
 
-  public long getId() {
+  public UUID getId() {
     return id;
   }
 
@@ -49,5 +39,9 @@ public class Diary {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
   }
 }

@@ -10,6 +10,7 @@ import com.alorma.diary.di.qualifiers.IoScheduler;
 import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
+import java.util.UUID;
 import javax.inject.Inject;
 
 public class DiariesAgent {
@@ -37,7 +38,7 @@ public class DiariesAgent {
         .subscribeOn(workScheduler);
   }
 
-  public Single<DiaryItemModel> getDiary(long id) {
+  public Single<DiaryItemModel> getDiary(UUID id) {
     return dataSource.getDiary(id)
         .map(diaryMapper.mapDiary())
         .subscribeOn(workScheduler);

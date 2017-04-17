@@ -1,10 +1,11 @@
 package com.alorma.diary.data.model;
 
 import java.util.List;
+import java.util.UUID;
 import polanski.option.Option;
 
 public class DiaryItemModel {
-  private long id;
+  private UUID id;
   private ContactItemModel contact;
   private EntryItemModel lastEntry;
   private List<EntryItemModel> entries;
@@ -26,11 +27,11 @@ public class DiaryItemModel {
     this.lastEntry = lastEntry;
   }
 
-  public long getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 

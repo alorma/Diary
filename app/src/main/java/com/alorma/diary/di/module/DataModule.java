@@ -8,6 +8,8 @@ import com.alorma.diary.data.SettingsManager;
 import com.alorma.diary.data.Validator;
 import com.alorma.diary.data.diary.agent.DiaryMapper;
 import com.alorma.diary.data.diary.agent.EntryMapper;
+import com.alorma.diary.data.diary.ds.DiaryListDataSource;
+import com.alorma.diary.data.diary.ds.PaperBookDiaryDataSource;
 import com.alorma.diary.data.diary.validator.DiaryNewItemValidator;
 import com.alorma.diary.data.diary.validator.EntryItemValidator;
 import com.alorma.diary.data.model.ContactItemModel;
@@ -15,10 +17,12 @@ import com.alorma.diary.data.model.DiaryListItemCreator;
 import com.alorma.diary.data.model.EntryItemModel;
 import com.alorma.diary.data.user.validator.UserNameMandatoryValidator;
 import com.alorma.diary.di.qualifiers.ApplicationContext;
+import com.alorma.diary.di.qualifiers.Cache;
 import com.alorma.diary.di.qualifiers.ComputationScheduler;
-import com.alorma.diary.di.qualifiers.MainScheduler;
 import com.alorma.diary.di.qualifiers.IoScheduler;
+import com.alorma.diary.di.qualifiers.MainScheduler;
 import com.alorma.diary.di.qualifiers.user.UserValidator;
+import com.pacoworks.rxpaper2.RxPaperBook;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.Scheduler;
@@ -80,5 +84,15 @@ public class DataModule {
   @Provides
   EntryMapper getEntryMapper() {
     return new EntryMapper();
+  }
+
+  @Provides
+  RxPaperBook providesPaperBook() {
+    return RxPaperBook.with(Schedulers.io());
+  }
+
+  @Provides
+  @Cache DiaryListDataSource provideDataSource(RxPaperBook paperBook) {
+    return new PaperBookDiaryDataSource(paperBook);
   }
 }

@@ -13,6 +13,7 @@ import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.data.model.EntryItemModel;
 import com.alorma.diary.di.component.ActivityComponent;
 import com.alorma.diary.ui.presenter.DiaryDetailPresenter;
+import java.util.UUID;
 import javax.inject.Inject;
 
 public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPresenter.Screen {
@@ -27,7 +28,7 @@ public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPres
     return intent;
   }
 
-  public static Intent createIntent(Context context, long diaryId) {
+  public static Intent createIntent(Context context, UUID diaryId) {
     Intent intent = new Intent(context, DiaryDetailActivity.class);
     intent.putExtra(Extras.DIARY_ID, diaryId);
     return intent;
@@ -51,7 +52,7 @@ public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPres
   }
 
   @Override
-  public void openNewEntry(long id) {
+  public void openNewEntry(UUID id) {
     Intent intent = AddDiaryEntryActivity.createIntent(this, id);
     startActivity(intent);
   }
@@ -64,7 +65,7 @@ public class DiaryDetailActivity extends BaseActivity implements DiaryDetailPres
   }
 
   private void loadData() {
-    long diaryId = getIntent().getExtras().getLong(Extras.DIARY_ID);
+    UUID diaryId = (UUID) getIntent().getExtras().getSerializable(Extras.DIARY_ID);
     diaryDetailPresenter.load(diaryId);
   }
 

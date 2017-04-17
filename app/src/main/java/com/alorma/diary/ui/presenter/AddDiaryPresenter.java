@@ -15,6 +15,7 @@ import com.alorma.diary.di.qualifiers.user.UserValidator;
 import io.reactivex.Completable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
+import java.util.UUID;
 import javax.inject.Inject;
 
 public class AddDiaryPresenter {
@@ -83,7 +84,7 @@ public class AddDiaryPresenter {
     getScreen().stopLoading();
   }
 
-  private void onAddItemComplete(long itemId) {
+  private void onAddItemComplete(UUID itemId) {
     getScreen().openDiaryScreenAndClose(itemId);
   }
 
@@ -107,7 +108,7 @@ public class AddDiaryPresenter {
 
     void stopLoading();
 
-    void openDiaryScreenAndClose(long id);
+    void openDiaryScreenAndClose(UUID id);
 
     void showError();
 
@@ -128,7 +129,7 @@ public class AddDiaryPresenter {
       }
 
       @Override
-      public void openDiaryScreenAndClose(long id) {
+      public void openDiaryScreenAndClose(UUID id) {
 
       }
 

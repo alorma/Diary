@@ -8,6 +8,7 @@ import com.alorma.diary.data.model.DiaryItemModel;
 import com.alorma.diary.di.qualifiers.MainScheduler;
 import io.reactivex.Completable;
 import io.reactivex.Scheduler;
+import java.util.UUID;
 import javax.inject.Inject;
 
 public class DiaryDetailPresenter {
@@ -38,7 +39,7 @@ public class DiaryDetailPresenter {
     this.screen = screen;
   }
 
-  public void load(long id) {
+  public void load(UUID id) {
     getDiaryUseCase.getDiary(id)
         .observeOn(mainScheduler)
         .doOnSubscribe(disposable -> getScreen().startLoading())
@@ -92,7 +93,7 @@ public class DiaryDetailPresenter {
 
     void showErrorAddEntry();
 
-    void openNewEntry(long id);
+    void openNewEntry(UUID id);
 
     class Null implements Screen {
 
@@ -127,7 +128,7 @@ public class DiaryDetailPresenter {
       }
 
       @Override
-      public void openNewEntry(long id) {
+      public void openNewEntry(UUID id) {
 
       }
     }

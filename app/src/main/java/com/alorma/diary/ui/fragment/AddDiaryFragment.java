@@ -108,7 +108,7 @@ public class AddDiaryFragment extends BaseFragment implements AddDiaryPresenter.
   }
 
   @Override
-  public void openDiaryScreenAndClose(long itemId) {
+  public void openDiaryScreenAndClose(UUID itemId) {
     Intent intent = DiaryDetailActivity.createIntent(getContext(), itemId);
     startActivity(intent);
     getActivity().finish();
